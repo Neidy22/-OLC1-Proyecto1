@@ -4,16 +4,36 @@
  */
 package ui;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author neidy
  */
 public class mainMenu extends javax.swing.JFrame {
+    
+    
+    //global variables
+    File myFile;
+    FileInputStream inF;
+    FileOutputStream outF;
+    String nameF;
 
     /**
      * Creates new form mainMenu
      */
     public mainMenu() {
+       
         initComponents();
         this.setLocationRelativeTo(null);
     }
@@ -47,10 +67,10 @@ public class mainMenu extends javax.swing.JFrame {
         jTree = new javax.swing.JTree();
         jMenuBar1 = new javax.swing.JMenuBar();
         jmFile = new javax.swing.JMenu();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        jMNewF = new javax.swing.JMenuItem();
+        jMOpenFile = new javax.swing.JMenuItem();
+        jMSaveF = new javax.swing.JMenuItem();
+        jMSaveAsF = new javax.swing.JMenuItem();
         jmView = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
@@ -201,27 +221,37 @@ public class mainMenu extends javax.swing.JFrame {
         jmFile.setForeground(new java.awt.Color(255, 255, 255));
         jmFile.setText("File");
 
-        jMenuItem4.setText("New File");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        jMNewF.setText("New File");
+        jMNewF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
+                jMNewFActionPerformed(evt);
             }
         });
-        jmFile.add(jMenuItem4);
+        jmFile.add(jMNewF);
 
-        jMenuItem1.setText("Open File");
-        jmFile.add(jMenuItem1);
-
-        jMenuItem2.setText("Save");
-        jmFile.add(jMenuItem2);
-
-        jMenuItem3.setText("Save As");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        jMOpenFile.setText("Open File");
+        jMOpenFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                jMOpenFileActionPerformed(evt);
             }
         });
-        jmFile.add(jMenuItem3);
+        jmFile.add(jMOpenFile);
+
+        jMSaveF.setText("Save");
+        jMSaveF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMSaveFActionPerformed(evt);
+            }
+        });
+        jmFile.add(jMSaveF);
+
+        jMSaveAsF.setText("Save As");
+        jMSaveAsF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMSaveAsFActionPerformed(evt);
+            }
+        });
+        jmFile.add(jMSaveAsF);
 
         jMenuBar1.add(jmFile);
 
@@ -275,13 +305,21 @@ public class mainMenu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    private void jMSaveAsFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMSaveAsFActionPerformed
+        try {
+    
+            saveAsFile();
+        } catch (IOException ex) {
+            Logger.getLogger(mainMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMSaveAsFActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+    private void jMNewFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMNewFActionPerformed
+       
+        this.txtFile.setText("");
+        myFile = null;
+        
+    }//GEN-LAST:event_jMNewFActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
         // TODO add your handling code here:
@@ -299,6 +337,98 @@ public class mainMenu extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAnalyzeActionPerformed
 
+    private void jMOpenFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMOpenFileActionPerformed
+        JFileChooser selector = new JFileChooser();
+        int returnVal = selector.showOpenDialog(jPanel1);
+        
+        if(returnVal == JFileChooser.APPROVE_OPTION){
+            myFile = selector.getSelectedFile();
+            if(myFile == null || (myFile.getName().equals(""))){
+                JOptionPane.showMessageDialog(this, "Archivo no válido");
+            }else{
+                setArea(myFile);
+            }
+            
+            
+        }else{
+            JOptionPane.showMessageDialog(this, "Sin selección!");
+        }
+        
+    }//GEN-LAST:event_jMOpenFileActionPerformed
+
+    private void jMSaveFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMSaveFActionPerformed
+        try {
+            // TODO add your handling code here:
+            saveFile();
+        } catch (IOException ex) {
+            Logger.getLogger(mainMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMSaveFActionPerformed
+
+    public void setArea(File f){
+        String text = "";
+        
+        try{
+            inF = new FileInputStream(f);
+            int value;
+            while((value = inF.read()) != -1){
+                char letter = (char)value;
+                text += letter;
+            }
+        }catch(Exception e){
+            
+        }
+        
+        txtFile.setText(text);
+    }
+    
+    void writeOutputFile(String txt ){
+        String dirF = "src\\files\\"+myFile.getName();
+       
+        try {
+            PrintWriter writer = new PrintWriter(dirF, "UTF-8");
+            writer.print(txt);
+            writer.close();
+            
+        } catch (IOException ex) {
+            Logger.getLogger(mainMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+    
+    }
+    
+    public void saveFile() throws FileNotFoundException, IOException{
+        
+        
+        if( myFile != null){
+            
+            writeOutputFile(txtFile.getText());
+            
+            JOptionPane.showMessageDialog(this, "Se guardaron los cambios");
+        }else{
+            saveAsFile();
+        }
+        
+    }
+    
+    public void saveAsFile() throws FileNotFoundException, IOException{
+        
+        nameF = JOptionPane.showInputDialog("Ingresa el nombre del archivo");
+        //Guardo en un aux el archivo actual para poder generar el nuevo archivo sin perder el actual
+        File aux = myFile;
+        String path = "src\\files\\"+nameF+".olc";
+        myFile = new File(path);
+        
+        writeOutputFile(txtFile.getText());
+        
+        
+        myFile = aux;
+         
+        JOptionPane.showMessageDialog(this, "Nuevo archivo guardado");
+    
+    }
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -339,14 +469,14 @@ public class mainMenu extends javax.swing.JFrame {
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnGenerate;
     private javax.swing.JButton btnNext;
+    private javax.swing.JMenuItem jMNewF;
+    private javax.swing.JMenuItem jMOpenFile;
+    private javax.swing.JMenuItem jMSaveAsF;
+    private javax.swing.JMenuItem jMSaveF;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
