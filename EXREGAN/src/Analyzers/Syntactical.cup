@@ -53,7 +53,7 @@ terminal String separator, comma, virgulilla, leftCurlyB, rightCurlyB, semicolon
 terminal String conj;
 
 //DEFINICION DE LOS NO TERMINALES
-non terminal INICIO, PROGRAMBODY, DEFINITION, EVALUATION, CONJUNTO, EXPRG, ID, NOTATION, LETTERS, NUMBERS; 
+non terminal INICIO, PROGRAMBODY, DEFINITION, EVALUATION, CONJUNTO, EXPRG, ID, NOTATION, LETTERS, NUMBERS,PREFIXREGEX, ELEMENT; 
 
 //PRECEDENCIAS
 
@@ -76,6 +76,27 @@ DEFINITION ::= CONJUNTO
 
 CONJUNTO ::= conj colon ID arrow NOTATION semicolon {: System.out.println("Nuevo conjunto"); :};
 
+//definicion de las expresiones regulares
+EXPRG ::= ID arrow  PREFIXREGEX semicolon{: System.out.println("Nueva expresión regular"); :};
+
+
+PREFIXREGEX ::= operatorAnd ELEMENT PREFIXREGEX
+              | operatorAnd ELEMENT ELEMENT
+              | operatorOr ELEMENT  PREFIXREGEX
+              | operatorOr ELEMENT ELEMENT
+              | operatorZeroMore PREFIXREGEX
+              | operatorZeroMore ELEMENT
+              | operatorOneMore  PREFIXREGEX
+              | operatorOneMore  ELEMENT
+              | operatorZeroOne PREFIXREGEX
+              | operatorZeroOne ELEMENT;
+
+
+
+ELEMENT ::= leftCurlyB ID rightCurlyB 
+          | stringVal; 
+
+
 ID ::= letterUp ID
      | letterLow ID
      | number ID 
@@ -97,9 +118,11 @@ LETTERS ::= letterLow comma LETTERS
 NUMBERS ::= number comma NUMBERS
           | number;
  
-  
 
-//definicion de las expresiones regulares
+
+
+
+
 
 //lexemas a evaluar
                
