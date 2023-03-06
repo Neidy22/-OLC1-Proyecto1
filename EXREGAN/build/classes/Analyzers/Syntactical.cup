@@ -47,13 +47,13 @@ terminal String comment, multicomment, stringVal, id;
 terminal String operatorAnd, operatorOr, operatorZeroMore, operatorOneMore, operatorZeroOne;
 
 //simbolos
-terminal String separator, comma, virgulilla, leftCurlyB, rightCurlyB, semicolon, colon, arrow, nextLine, nextL, singleQuoMark, doubleQuoMark, letter, number, asciiChar;
+terminal String separator, comma, virgulilla, leftCurlyB, rightCurlyB, semicolon, colon, arrow, nextLine, nextL, singleQuoMark, doubleQuoMark, letterLow, letterUp, number, asciiChar;
 
 //reservadas
 terminal String conj;
 
 //DEFINICION DE LOS NO TERMINALES
-non terminal INICIO, PROGRAMBODY; 
+non terminal INICIO, PROGRAMBODY, DEFINITION, EVALUATION, CONJUNTO, EXPRG, ID, NOTATION, LETTERS, NUMBERS; 
 
 //PRECEDENCIAS
 
@@ -65,5 +65,41 @@ INICIO ::= leftCurlyB PROGRAMBODY;
 
 PROGRAMBODY ::= comment PROGRAMBODY
                |multicomment PROGRAMBODY
+               |DEFINITION PROGRAMBODY
                |error PROGRAMBODY;
+
+//definicion de los conjuntos
+DEFINITION ::= CONJUNTO 
+             | EXPRG 
+             | separator separator;
+             
+
+CONJUNTO ::= conj colon ID arrow NOTATION semicolon {: System.out.println("Nuevo conjunto"); :};
+
+ID ::= letterUp ID
+     | letterLow ID
+     | number ID 
+     | letterUp
+     | letterLow
+     | number;
+
+NOTATION ::= letterLow virgulilla letterLow
+           | letterUp virgulilla letterUp
+           | number virgulilla number
+           | LETTERS
+           | NUMBERS;
+
+LETTERS ::= letterLow comma LETTERS
+          | letterUp comma LETTERS
+          | letterLow
+          | letterUp;
+
+NUMBERS ::= number comma NUMBERS
+          | number;
+ 
+  
+
+//definicion de las expresiones regulares
+
+//lexemas a evaluar
                

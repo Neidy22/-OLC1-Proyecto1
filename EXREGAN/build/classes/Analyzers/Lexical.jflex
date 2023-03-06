@@ -24,23 +24,25 @@ import java_cup.runtime.*;
 %init}
 
 //expresiones regulares
+endOfLineS = \r|\n|\r\n
+inputChar = [^\r\n]
+comment = "//" {inputChar}*{endOfLineS}?
 
 number = [0-9]
-letter = [a-zA-Z]
+letterLow = [a-z]
+letterUp = [A-Z]
 comma = ","
 virgulilla = \u007E
-//           alt32 - alt47      alt58 - alt64    alt91 - alt96    alt123 - alt125
-asciiChar = [\u0020-\u002F] | [\u003A-\u0040] | [\u005B-\u0060] | [\u007B-\u007D]
+//           alt33 - alt47      alt58 - alt64    alt91 - alt96    alt123 - alt125
+asciiChar = [\u0021-\u002F] | [\u003A-\u0040] | [\u005B-\u0060] | [\u007B-\u007D]
 
 leftCurlyB = \u007B[nextLine]*[nextL]*
 rightCurlyB = \u007D[nextLine]*
 semicolon = \u003B
 colon = \u003A
 arrow = ([\u002D][\u003E]) 
-nextLine = "\n"
-//nextL = \u005C"n"
-//singleQuoMark = \u0027
-//doubleQuoMark = \u0022
+
+
 
 operatorAnd = \u002E
 operatorOr = \u007C
@@ -49,31 +51,17 @@ operatorOneMore = \u002B
 operatorZeroOne = \u003F
 separator = [\u0025][\u0025]
 
-%state comment , multicomment, specials, strings, identifiers
+%state  multicomment, specials, strings, identifiers
 
 %%
 
-<YYINITIAL> [//]                 {System.out.println("inicio comentario simple");
-                                    lexema = lexema + yytext();
-                                    yybegin(comment);
-                                 }
-
-            <comment> [^\n]+     { lexema = lexema + yytext();} 
-            <comment> \n         {
-                                    System.out.println("Reconocio token <comentario> lexema: "+ lexema);
-                                    String aux = lexema;
-                                    lexema = "";
-                                    yybegin(YYINITIAL);
-                                    return new Symbol(sym.comment, yycolumn, yyline, aux);
-                                    
-                                
-                                    
-                                    
-                                 }
+ <YYINITIAL> {comment}          {System.out.println("Reconocio token <comment> lexema: "+ yytext()); 
+                                 return new Symbol(sym.comment, yycolumn, yyline, yytext());  
+                                }  
 
 
 <YYINITIAL> "<!"                 {  
-                                    System.out.println("inicio comentario multi");
+                                   
                                     lexema = lexema +yytext();
                                     yybegin(multicomment);
                                  }
@@ -208,13 +196,15 @@ separator = [\u0025][\u0025]
                              return new Symbol(sym.arrow, yycolumn, yyline, yytext());  
                             }
 
-<YYINITIAL> {nextLine}      {System.out.println("Reconocio token <nextLine> lexema: "+ yytext()); 
-                             return new Symbol(sym.nextLine, yycolumn, yyline, yytext());  
+
+
+
+<YYINITIAL> {letterLow}        {System.out.println("Reconocio token <letterLow> lexema: "+ yytext()); 
+                             return new Symbol(sym.letterLow, yycolumn, yyline, yytext()); 
                             }
 
-
-<YYINITIAL> {letter}        {System.out.println("Reconocio token <letter> lexema: "+ yytext()); 
-                             return new Symbol(sym.letter, yycolumn, yyline, yytext()); 
+<YYINITIAL> {letterUp}        {System.out.println("Reconocio token <letterUp> lexema: "+ yytext()); 
+                             return new Symbol(sym.letterUp, yycolumn, yyline, yytext()); 
                             }
 
 
@@ -238,7 +228,7 @@ separator = [\u0025][\u0025]
 
 
 
-[ \t\r\f ]+ {/*Espacios en blanco se ignoran */}
+[ \t\r\n\f ]+ {/*Espacios en blanco se ignoran */}
 
 .   {
         System.out.println("Error léxico:  "+ yytext()+" Linea: "+ yyline +" Columna: "+yycolumn);
