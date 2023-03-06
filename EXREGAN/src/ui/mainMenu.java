@@ -4,6 +4,7 @@
  */
 package ui;
 
+import Analyzers.Analyzer;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -11,6 +12,7 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.StringReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -101,6 +103,11 @@ public class mainMenu extends javax.swing.JFrame {
         btnGenerate.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         btnGenerate.setForeground(new java.awt.Color(255, 255, 255));
         btnGenerate.setText("Generate automat");
+        btnGenerate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerateActionPerformed(evt);
+            }
+        });
 
         btnAnalyze.setBackground(new java.awt.Color(255, 218, 48));
         btnAnalyze.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
@@ -364,6 +371,18 @@ public class mainMenu extends javax.swing.JFrame {
             Logger.getLogger(mainMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jMSaveFActionPerformed
+
+    private void btnGenerateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerateActionPerformed
+        // TODO add your handling code here:
+        try {
+            Analyzers.Syntactical parse;
+            parse = new Analyzers.Syntactical( new Analyzers.Lexical(new StringReader( txtFile.getText())));
+
+            parse.parse();
+        }catch (Exception ex) {
+            
+        }
+    }//GEN-LAST:event_btnGenerateActionPerformed
 
     public void setArea(File f){
         String text = "";

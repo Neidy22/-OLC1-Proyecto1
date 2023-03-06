@@ -1,0 +1,69 @@
+//importaciones
+package Analyzers;
+import java_cup.runtime.*;
+
+parser code
+{:
+    //metodo al que se llama automaticamente ante algun error sintactico
+    public void syntax_error(Symbol s)
+    {
+        String lexema = s.value.toString();
+        int fila = s.right;
+        int columna = s.left;
+
+        System.out.println("!!!!!!! Error Sintactico Recuperado !!!!!!!!!");
+        System.out.println("\t\tLexema: "+lexema);
+        System.out.println("\t\tFila: "+fila);
+        System.out.println("\t\tColumna: "+columna);
+        
+        //TError tmp = new TError("Sintactico",lexema,"Caracter no esperado",fila,columna);
+        //Proyecto1.errores.add(tmp);
+    }
+
+    //Metodo al que se llama en el momento en que ya no es posible una recuperación
+    public  void unrecovered_syntax_error(Symbol s) throws java.lang.Exception
+    {
+        String lexema = s.value.toString();
+        int fila = s.right;
+        int columna = s.left;
+
+        System.out.println("!!!!!!! Error Sintactico, Panic Mode !!!!!!!!!");
+        System.out.println("\t\tLexema: "+lexema);
+        System.out.println("\t\tFila: "+fila);
+        System.out.println("\t\tColumna: "+columna);
+        
+        //TError tmp = new TError("Sintactico",lexema,"Caracter no esperado",fila,columna);
+        //Proyecto1.errores.add(tmp);
+        
+    }
+:}
+
+
+//DEFINICION DE LOS TERMINALES 
+//expresiones compuestas
+terminal String comment, multicomment, stringVal, id;
+
+//operadores de las expresiones 
+terminal String operatorAnd, operatorOr, operatorZeroMore, operatorOneMore, operatorZeroOne;
+
+//simbolos
+terminal String separator, comma, virgulilla, leftCurlyB, rightCurlyB, semicolon, colon, arrow, nextLine, nextL, singleQuoMark, doubleQuoMark, letter, number, asciiChar;
+
+//reservadas
+terminal String conj;
+
+//DEFINICION DE LOS NO TERMINALES
+non terminal INICIO, PROGRAMBODY; 
+
+//PRECEDENCIAS
+
+//le indico  con cuál palabra reservada va a comenzar la gramática
+start with INICIO;
+
+INICIO ::= leftCurlyB PROGRAMBODY;
+         
+
+PROGRAMBODY ::= comment PROGRAMBODY
+               |multicomment PROGRAMBODY
+               |error PROGRAMBODY;
+               

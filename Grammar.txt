@@ -1,0 +1,43 @@
+comment = //(letra|digito|caracter)
+multiComment = <! (letra|digito|caracter)* !>
+
+DEFINICION DE CONJUNTOS
+conjunto = CONJ:id->notation;
+notation = initVal~endVal
+
+DEFINICION DE EXPRESIONES REGULARES
+expr = id->prefixRegex
+prefixRegex = operator Element Element;
+operator = . | | |* | + |?
+Element = {conjunto} | stringsV | specialChar
+
+DEFINICION DE CARACTERES ESPECIALES
+nextLine = \n
+singleQuoMark = \'
+doubleQuoMark = \"
+
+DEFINICION DE EVALUACIONES
+eval = id : " lexema " ;
+
+
+DEFINICION DE LA GRAMATICA
+INIT -> comment INIT
+	|multicomment INIT
+	|definition evaluation 
+	|evaluation 
+	|error	INIT
+
+definition -> conjunto definition
+	    | expr definition
+            | comment definition
+            | multicomment definition
+	    | separator separator
+
+evaluation -> eval evaluation
+	   | comment evaluation
+           | multicomment evaluation
+	   | eval
+	
+
+
+		
