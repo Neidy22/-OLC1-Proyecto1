@@ -66,15 +66,23 @@ INICIO ::= leftCurlyB PROGRAMBODY;
 PROGRAMBODY ::= comment PROGRAMBODY
                |multicomment PROGRAMBODY
                |DEFINITION PROGRAMBODY
-               |error PROGRAMBODY;
+               |EVALUATION PROGRAMBODY
+               |error PROGRAMBODY
+               |rightCurlyB;
 
 //definicion de los conjuntos
 DEFINITION ::= CONJUNTO 
              | EXPRG 
              | separator separator;
-             
+
 
 CONJUNTO ::= conj colon ID arrow NOTATION semicolon {: System.out.println("Nuevo conjunto"); :};
+
+NOTATION ::= letterLow virgulilla letterLow
+           | letterUp virgulilla letterUp
+           | number virgulilla number
+           | LETTERS
+           | NUMBERS;
 
 //definicion de las expresiones regulares
 EXPRG ::= ID arrow  PREFIXREGEX semicolon{: System.out.println("Nueva expresión regular"); :};
@@ -97,6 +105,11 @@ ELEMENT ::= leftCurlyB ID rightCurlyB
           | stringVal; 
 
 
+//lexemas a evaluar
+EVALUATION ::= ID colon stringVal semicolon {: System.out.println("Nuevo lexema a evaluar"); :};
+
+
+
 ID ::= letterUp ID
      | letterLow ID
      | number ID 
@@ -104,11 +117,7 @@ ID ::= letterUp ID
      | letterLow
      | number;
 
-NOTATION ::= letterLow virgulilla letterLow
-           | letterUp virgulilla letterUp
-           | number virgulilla number
-           | LETTERS
-           | NUMBERS;
+
 
 LETTERS ::= letterLow comma LETTERS
           | letterUp comma LETTERS
@@ -124,5 +133,5 @@ NUMBERS ::= number comma NUMBERS
 
 
 
-//lexemas a evaluar
+
                
