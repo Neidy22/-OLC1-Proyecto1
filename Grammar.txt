@@ -40,4 +40,21 @@ evaluation -> eval evaluation
 	
 
 
+<YYINITIAL> ["//"]                 {
+                                    lexema = lexema + yytext();
+                                    yybegin(comment);
+                                 }
+
+            <comment> [^\r\n]*     { lexema = lexema + yytext();} 
+            <comment> \r\n   {
+                                    System.out.println("Reconocio token <comentario> lexema: "+ lexema);
+                                    String aux = lexema;
+                                    lexema = "";
+                                    yybegin(YYINITIAL);
+                                    return new Symbol(sym.comment, yycolumn, yyline, aux);
+                                    
+                                
+                                    
+                                    
+                                    }
 		

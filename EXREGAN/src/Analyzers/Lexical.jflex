@@ -27,6 +27,9 @@ import java_cup.runtime.*;
 endOfLineS = \r|\n|\r\n
 inputChar = [^\r\n]
 comment = "//" {inputChar}*{endOfLineS}?
+letters = [a-zA-Z]
+values = {letters} | {number} | {asciiChar} | {nextL} | {singleQuoMark} | {doubleQuoMark}
+stringVal = [\u0022]{values}*[\u0022]
 
 number = [0-9]
 letterLow = [a-z]
@@ -36,12 +39,16 @@ virgulilla = \u007E
 //           alt33 - alt47      alt58 - alt64    alt91 - alt96    alt123 - alt125
 asciiChar = [\u0021-\u002F] | [\u003A-\u0040] | [\u005B-\u0060] | [\u007B-\u007D]
 
-leftCurlyB = \u007B[nextLine]*[nextL]*
-rightCurlyB = \u007D[nextLine]*
+leftCurlyB = \u007B
+rightCurlyB = \u007D
 semicolon = \u003B
 colon = \u003A
 arrow = ([\u002D][\u003E]) 
 
+
+nextL = [\u005C]"n"
+singleQuoMark = [\u005C][\u0027]    
+doubleQuoMark = [\u005C][\u0022]
 
 
 operatorAnd = \u002E
@@ -55,7 +62,7 @@ separator = [\u0025][\u0025]
 
 %%
 
- <YYINITIAL> {comment}          {System.out.println("Reconocio token <comment> lexema: "+ yytext()); 
+<YYINITIAL> {comment}          {System.out.println("Reconocio token <comment> lexema: "+ yytext()); 
                                  return new Symbol(sym.comment, yycolumn, yyline, yytext());  
                                 }  
 
@@ -79,62 +86,15 @@ separator = [\u0025][\u0025]
                                             
                                         }
 
-<YYINITIAL> [\u005C]    {  
-                            lexema = "";
-                            lexema = lexema +yytext();
-                            yybegin(specials);
-                        }
 
-            <specials>  "n"             {
-                                            lexema = lexema + yytext();
-                                            System.out.println("Reconocio token <nextL> lexema: "+ lexema); 
-                                            String aux = lexema;
-                                            lexema = "";
-
-                                            yybegin(YYINITIAL);
-                                            return new Symbol(sym.nextL, yycolumn, yyline, aux);
-                                        }
-
-            <specials> [\u0027]         {
-                                            lexema = lexema + yytext();
-                                            System.out.println("Reconocio token <singleQuoMark> lexema: "+ lexema); 
-                                            String aux = lexema;
-                                            lexema = "";
-
-                                            yybegin(YYINITIAL);
-                                            return new Symbol(sym.singleQuoMark, yycolumn, yyline, aux);
-                                        }
-
-            <specials> [\u0022]         {
-                                            lexema = lexema + yytext();
-                                            System.out.println("Reconocio token <doubleQuoMark> lexema: "+ lexema); 
-                                            String aux = lexema;
-                                            lexema = "";
-
-                                            yybegin(YYINITIAL);
-                                            return new Symbol(sym.doubleQuoMark, yycolumn, yyline, aux);
-                                        }
 //reconoce las comillas dobles
-<YYINITIAL> [\u0022]    {  
-                            lexema = "";
-                            //lexema = lexema +yytext();
-                            yybegin(strings);
-                        }
-            
-            //hasta que encuentra el final de la cadena añade al lexema todo lo que encuentre
-            <strings> [^\u0022]     {
-                                        lexema = lexema + yytext();
-                                    }
-
-            //si se encuentra con la siguiente comilla doble significa que la cadena finalizó y reconoce el token cadena
-            <strings> [\u0022]      {
-                                        //lexema = lexema + yytext();
-                                        System.out.println("Reconocio token <stringVal> lexema: "+ lexema); 
-                                        String aux = lexema;
-                                        lexema = "";
+<YYINITIAL> {stringVal}             {
+                                      
+                                        System.out.println("Reconocio token <stringVal> lexema: "+ yytext()); 
+                                        
 
                                         yybegin(YYINITIAL);
-                                        return new Symbol(sym.stringVal, yycolumn, yyline, aux);
+                                        return new Symbol(sym.stringVal, yycolumn, yyline, yytext());
                                     }
 
 

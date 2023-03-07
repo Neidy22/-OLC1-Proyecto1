@@ -47,7 +47,7 @@ terminal String comment, multicomment, stringVal, id;
 terminal String operatorAnd, operatorOr, operatorZeroMore, operatorOneMore, operatorZeroOne;
 
 //simbolos
-terminal String separator, comma, virgulilla, leftCurlyB, rightCurlyB, semicolon, colon, arrow, nextLine, nextL, singleQuoMark, doubleQuoMark, letterLow, letterUp, number, asciiChar;
+terminal String separator, comma, virgulilla, leftCurlyB, rightCurlyB, semicolon, colon, arrow, letterLow, letterUp, number, asciiChar;
 
 //reservadas
 terminal String conj;
