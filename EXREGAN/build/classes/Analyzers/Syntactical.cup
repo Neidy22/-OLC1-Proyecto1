@@ -1,5 +1,7 @@
 //importaciones
 package Analyzers;
+import Main.EXREGAN;
+import Objects.*;
 import java_cup.runtime.*;
 
 parser code
@@ -16,8 +18,8 @@ parser code
         System.out.println("\t\tFila: "+fila);
         System.out.println("\t\tColumna: "+columna);
         
-        //TError tmp = new TError("Sintactico",lexema,"Caracter no esperado",fila,columna);
-        //Proyecto1.errores.add(tmp);
+        TError tmp = new TError("Sintactico",lexema,"Caracter no esperado",fila,columna);
+        EXREGAN.errores.add(tmp);
     }
 
     //Metodo al que se llama en el momento en que ya no es posible una recuperación
@@ -32,8 +34,8 @@ parser code
         System.out.println("\t\tFila: "+fila);
         System.out.println("\t\tColumna: "+columna);
         
-        //TError tmp = new TError("Sintactico",lexema,"Caracter no esperado",fila,columna);
-        //Proyecto1.errores.add(tmp);
+        TError tmp = new TError("Sintactico",lexema,"Caracter no esperado",fila,columna);
+        EXREGAN.errores.add(tmp);
         
     }
 :}
@@ -53,7 +55,7 @@ terminal String separator, comma, virgulilla, leftCurlyB, rightCurlyB, semicolon
 terminal String conj;
 
 //DEFINICION DE LOS NO TERMINALES
-non terminal INICIO, PROGRAMBODY, DEFINITION, EVALUATION, CONJUNTO, EXPRG, ID, NOTATION, LETTERS, NUMBERS,PREFIXREGEX, ELEMENT; 
+non terminal INICIO, PROGRAMBODY, DEFINITION, EVALUATION, CONJUNTO, EXPRG, ID, NOTATION, LETTERS, NUMBERS, PREFIXREGEX, ELEMENT, ASCIIS; 
 
 //PRECEDENCIAS
 
@@ -81,8 +83,10 @@ CONJUNTO ::= conj colon ID arrow NOTATION semicolon {: System.out.println("Nuevo
 NOTATION ::= letterLow virgulilla letterLow
            | letterUp virgulilla letterUp
            | number virgulilla number
+           | asciiChar virgulilla asciiChar
            | LETTERS
-           | NUMBERS;
+           | NUMBERS
+           | ASCIIS;
 
 //definicion de las expresiones regulares
 EXPRG ::= ID arrow  PREFIXREGEX semicolon{: System.out.println("Nueva expresión regular"); :};
@@ -127,7 +131,8 @@ LETTERS ::= letterLow comma LETTERS
 NUMBERS ::= number comma NUMBERS
           | number;
  
-
+ASCIIS ::= asciiChar comma ASCIIS
+         | asciiChar;
 
 
 

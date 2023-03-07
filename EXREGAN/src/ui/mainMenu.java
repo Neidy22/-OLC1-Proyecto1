@@ -5,6 +5,9 @@
 package ui;
 
 import Analyzers.Analyzer;
+import Main.EXREGAN;
+import Objects.TError;
+import java.awt.Desktop;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -30,6 +33,7 @@ public class mainMenu extends javax.swing.JFrame {
     FileInputStream inF;
     FileOutputStream outF;
     String nameF;
+    int contador;
 
     /**
      * Creates new form mainMenu
@@ -80,6 +84,7 @@ public class mainMenu extends javax.swing.JFrame {
         jMenu5 = new javax.swing.JMenu();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
+        jMenuError = new javax.swing.JMenuItem();
 
         jMenu1.setText("jMenu1");
 
@@ -294,6 +299,14 @@ public class mainMenu extends javax.swing.JFrame {
 
         jmView.add(jMenu5);
 
+        jMenuError.setText("Error Table");
+        jMenuError.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuErrorActionPerformed(evt);
+            }
+        });
+        jmView.add(jMenuError);
+
         jMenuBar1.add(jmView);
 
         setJMenuBar(jMenuBar1);
@@ -384,6 +397,19 @@ public class mainMenu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnGenerateActionPerformed
 
+    private void jMenuErrorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuErrorActionPerformed
+        // TODO add your handling code here:
+        //rellenar tabla de errores
+        String tableHtml = generateTable();
+        File tableErrors = new File("src\\files\\ERRORES_"+this.contador+".html");
+        createFile(tableErrors,tableHtml);
+        try { 
+            openDisplay(tableErrors.toString());
+        } catch (IOException ex) {
+            Logger.getLogger(mainMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuErrorActionPerformed
+
     public void setArea(File f){
         String text = "";
         
@@ -447,6 +473,88 @@ public class mainMenu extends javax.swing.JFrame {
     
     }
     
+    public String generateTable(){
+        
+        String contenido;
+        
+        String header ="<html>\n";
+        header += "<style>\n";
+        header += "table,th,td{\n"
+                + "border:1px solid black;\n"
+                + "}\n"
+                + "</style>\n";
+        
+        header += "<h1>TABLA DE ERRORES</h1>\n";
+        
+        String body ="<body>\n"
+                    + "<table> \n";
+        body += "    <tr>\n";
+        body += "        <th>No. </th>\n";
+        body += "        <th>Línea</th>\n";
+        body += "        <th>Columna</th>\n";
+        body += "        <th>Tipo</th>\n";
+        body += "        <th>Lexema</th>\n";
+        body += "        <th>Descripción</th>\n";
+        body += "    </tr>\n";
+        
+        int cont = 1;
+        for(TError x: EXREGAN.errores ){
+            body += "    <tr>\n";
+            body += "        <th>"+cont+"</th>\n";
+            body += "        <th>"+x.getRow()+"</th>\n";
+            body += "        <th>"+x.getColumn()+"</th>\n";
+            body += "        <th>"+x.getType()+"</th>\n";
+            body += "        <th>"+x.getLex()+"</th>\n";
+            body += "        <th>"+x.getDesc()+"</th>\n";
+            body += "    </tr>\n";
+            cont++;
+        }
+        body+="</table>\n"
+             +"</body>\n"
+             +"<html>\n";
+                
+        contenido = header + body;
+        return contenido;
+    }
+    
+    public void createFile(File file, String contenido){
+        if(!file.exists()){
+            try {
+                file.createNewFile();
+            } catch (IOException ex) {
+               
+            }
+        }
+        
+        FileWriter fichero = null;
+        PrintWriter pw = null;
+        
+        try
+        {
+            fichero = new FileWriter(file);
+            pw = new PrintWriter(fichero);
+            String [] lineas = contenido.split("\n");
+
+            for (String linea: lineas)
+                pw.println(linea);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+           try {           // Nuevamente aprovechamos el finally para 
+           // asegurarnos que se cierra el fichero.
+            if (null != fichero)
+               fichero.close();
+           } catch (Exception e2) {
+              e2.printStackTrace();
+           }
+        }
+    }
+    
+    public void openDisplay(String ruta) throws IOException{
+        File obj = new File(ruta);
+        Desktop.getDesktop().open(obj);
+    }
     
     /**
      * @param args the command line arguments
@@ -496,6 +604,7 @@ public class mainMenu extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuError;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
