@@ -32,10 +32,11 @@ comment = "//" {inputChar}*{endOfLineS}?
 letters = [a-zA-Z]
 values = {letters} | {number} | {asciiChar} | {nextL} | {singleQuoMark} | {doubleQuoMark}
 stringVal = [\u0022]{values}*[\u0022]
+idVal = {letters} | {number}
+id = {idVal}+
 
 number = [0-9]
-letterLow = [a-z]
-letterUp = [A-Z]
+
 comma = ","
 virgulilla = \u007E
 //           alt33 - alt47      alt58 - alt64    alt91 - alt96    alt123 - alt125
@@ -161,21 +162,6 @@ separator = [\u0025][\u0025]
 
 
 
-<YYINITIAL> {letterLow}        {System.out.println("Reconocio token <letterLow> lexema: "+ yytext()); 
-                             return new Symbol(sym.letterLow, yycolumn, yyline, yytext()); 
-                            }
-
-<YYINITIAL> {letterUp}        {System.out.println("Reconocio token <letterUp> lexema: "+ yytext()); 
-                             return new Symbol(sym.letterUp, yycolumn, yyline, yytext()); 
-                            }
-
-
-<YYINITIAL> {number}        {System.out.println("Reconocio token <number> lexema: "+ yytext()); 
-                             return new Symbol(sym.number, yycolumn, yyline, yytext()); 
-                            }
-
-
-
 <YYINITIAL> {asciiChar}     {System.out.println("Reconocio token <asciiChar> lexema: "+ yytext()); 
                              return new Symbol(sym.asciiChar, yycolumn, yyline, yytext()); 
                             }
@@ -186,6 +172,10 @@ separator = [\u0025][\u0025]
 
 <YYINITIAL> "CONJ"          {System.out.println("Reconocio token <conj> lexema: "+ yytext()); 
                              return new Symbol(sym.conj, yycolumn, yyline, yytext());  
+                            }
+
+<YYINITIAL> {id}            {System.out.println("Reconocio token <id> lexema: "+ yytext()); 
+                             return new Symbol(sym.id, yycolumn, yyline, yytext());  
                             }
 
 

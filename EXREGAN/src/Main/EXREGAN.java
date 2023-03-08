@@ -21,7 +21,8 @@ public class EXREGAN {
     public static mainMenu menu = new mainMenu();
     public static LinkedList <Conjunto> conjuntos = new LinkedList<Conjunto>();
     public static LinkedList <TError> errores = new LinkedList<TError>();
-    
+    public static LinkedList <AST> trees = new LinkedList<AST>();
+
     public static void main(String[] args) {
         // TODO code application logic here
         menu.setVisible(true);

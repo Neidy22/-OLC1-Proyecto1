@@ -11,25 +11,22 @@ public class sym {
   public static final int rightCurlyB = 15;
   public static final int operatorZeroMore = 8;
   public static final int comment = 2;
-  public static final int number = 21;
   public static final int multicomment = 3;
   public static final int arrow = 18;
   public static final int separator = 11;
-  public static final int conj = 23;
+  public static final int conj = 20;
   public static final int operatorOneMore = 9;
   public static final int semicolon = 16;
-  public static final int letterUp = 20;
   public static final int EOF = 0;
   public static final int operatorZeroOne = 10;
   public static final int id = 5;
   public static final int virgulilla = 13;
   public static final int error = 1;
-  public static final int letterLow = 19;
   public static final int stringVal = 4;
   public static final int colon = 17;
   public static final int operatorOr = 7;
   public static final int operatorAnd = 6;
-  public static final int asciiChar = 22;
+  public static final int asciiChar = 19;
   public static final int comma = 12;
   public static final int leftCurlyB = 14;
   public static final String[] terminalNames = new String[] {
@@ -52,9 +49,6 @@ public class sym {
   "semicolon",
   "colon",
   "arrow",
-  "letterLow",
-  "letterUp",
-  "number",
   "asciiChar",
   "conj"
   };

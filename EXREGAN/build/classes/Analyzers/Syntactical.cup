@@ -2,10 +2,16 @@
 package Analyzers;
 import Main.EXREGAN;
 import Objects.*;
+import ui.*;
 import java_cup.runtime.*;
 
 parser code
 {:
+    
+    //metodos para controlar el arbol de expresiones
+    public static int ids = 0;
+    public static AST rootT;
+
     //metodo al que se llama automaticamente ante algun error sintactico
     public void syntax_error(Symbol s)
     {
@@ -49,15 +55,17 @@ terminal String comment, multicomment, stringVal, id;
 terminal String operatorAnd, operatorOr, operatorZeroMore, operatorOneMore, operatorZeroOne;
 
 //simbolos
-terminal String separator, comma, virgulilla, leftCurlyB, rightCurlyB, semicolon, colon, arrow, letterLow, letterUp, number, asciiChar;
+terminal String separator, comma, virgulilla, leftCurlyB, rightCurlyB, semicolon, colon, arrow, asciiChar;
 
 //reservadas
 terminal String conj;
 
 //DEFINICION DE LOS NO TERMINALES
-non terminal INICIO, PROGRAMBODY, DEFINITION, EVALUATION, CONJUNTO, EXPRG, ID, NOTATION, LETTERS, NUMBERS, PREFIXREGEX, ELEMENT, ASCIIS; 
+non terminal INICIO, PROGRAMBODY, DEFINITION, EVALUATION, CONJUNTO, EXPRG, NOTATION, LISTVAL, PREFIXREGEX, ASCIIS; 
 
 //PRECEDENCIAS
+precedence left operatorOr;
+precedence left operatorAnd; 
 
 //le indico  con cuál palabra reservada va a comenzar la gramática
 start with INICIO;
@@ -78,59 +86,96 @@ DEFINITION ::= CONJUNTO
              | separator separator;
 
 
-CONJUNTO ::= conj colon ID arrow NOTATION semicolon {: System.out.println("Nuevo conjunto"); :};
+CONJUNTO ::= conj colon id arrow NOTATION semicolon {: System.out.println("Nuevo conjunto"); :};
 
-NOTATION ::= letterLow virgulilla letterLow
-           | letterUp virgulilla letterUp
-           | number virgulilla number
+NOTATION ::= id virgulilla id
            | asciiChar virgulilla asciiChar
-           | LETTERS
-           | NUMBERS
+           | LISTVAL
            | ASCIIS;
 
 //definicion de las expresiones regulares
-EXPRG ::= ID arrow  PREFIXREGEX semicolon{: System.out.println("Nueva expresión regular"); :};
+EXPRG ::= id:n arrow  PREFIXREGEX:r semicolon
+          {: 
+            parser.rootT = (AST)r;
+            parser.rootT.setName((String)n);
+            parser.rootT.graph();
+            EXREGAN.trees.add((AST)r);
+            EXREGAN.menu.addTree((String)n);
+            System.out.println("Nueva expresión regular"); 
+          :};
 
 
-PREFIXREGEX ::= operatorAnd ELEMENT PREFIXREGEX
-              | operatorAnd ELEMENT ELEMENT
-              | operatorOr ELEMENT  PREFIXREGEX
-              | operatorOr ELEMENT ELEMENT
-              | operatorZeroMore PREFIXREGEX
-              | operatorZeroMore ELEMENT
-              | operatorOneMore  PREFIXREGEX
-              | operatorOneMore  ELEMENT
-              | operatorZeroOne PREFIXREGEX
-              | operatorZeroOne ELEMENT;
+PREFIXREGEX ::= operatorAnd PREFIXREGEX:le PREFIXREGEX:ri
+                {:
+                    System.out.println("nuevo . P");
+                    parser.ids++;
+                    RESULT = new AST(parser.ids, ".", (AST)le, (AST)ri); 
+                :}
+
+              | operatorOr PREFIXREGEX:le  PREFIXREGEX:ri
+                {:
+                    System.out.println("nuevo | P");
+                    parser.ids++;
+                    RESULT = new AST(parser.ids, "|", (AST)le, (AST)ri); 
+ 
+                :}
+
+              | operatorZeroMore PREFIXREGEX:le
+                {:
+                    System.out.println("nuevo * P");
+                    parser.ids++;
+                    RESULT = new AST(parser.ids, "*", (AST)le, null); 
+
+                :}
+
+              | operatorOneMore  PREFIXREGEX:le
+                {:
+                    System.out.println("nuevo + P");
+                    parser.ids++;
+                    RESULT = new AST(parser.ids, "+", (AST)le, null); 
+
+                :}
+
+              | operatorZeroOne PREFIXREGEX:le
+                {:
+                    System.out.println("nuevo ? P");
+                    parser.ids++;
+                    RESULT = new AST(parser.ids, "?", (AST)le, null); 
+ 
+                :}
+              | leftCurlyB id:o rightCurlyB 
+                {:
+                    System.out.println("nuevo id"); 
+                    AST newVal = new AST(parser.ids, o, null, null );
+                    parser.ids++;
+                    RESULT = newVal;
+
+                :}
+              | stringVal:o
+                {:  
+                    String contenido = (String)o;
+                    String [] concat=contenido.split("\"");//eliminando las comillas de la cadena para que no de error al generar el png
+                    System.out.println("nuevo string"); 
+                    AST newVal = new AST(parser.ids, concat[1], null, null );
+                    parser.ids++;
+                    RESULT = newVal;
+
+                :};
 
 
 
-ELEMENT ::= leftCurlyB ID rightCurlyB 
-          | stringVal; 
+
+
 
 
 //lexemas a evaluar
-EVALUATION ::= ID colon stringVal semicolon {: System.out.println("Nuevo lexema a evaluar"); :};
+EVALUATION ::= id colon stringVal semicolon {: System.out.println("Nuevo lexema a evaluar"); :};
 
 
+//listas
+LISTVAL ::= id comma LISTVAL
+          | id;
 
-ID ::= letterUp ID
-     | letterLow ID
-     | number ID 
-     | letterUp
-     | letterLow
-     | number;
-
-
-
-LETTERS ::= letterLow comma LETTERS
-          | letterUp comma LETTERS
-          | letterLow
-          | letterUp;
-
-NUMBERS ::= number comma NUMBERS
-          | number;
- 
 ASCIIS ::= asciiChar comma ASCIIS
          | asciiChar;
 

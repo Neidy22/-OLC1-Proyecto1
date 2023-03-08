@@ -1,0 +1,14 @@
+digraph AST{
+    rankdir=TB;
+    node14 -> node8;
+    node14 -> node13;
+    node13 -> node9;
+    node13 -> node12;
+    node12 -> node10;
+   node14[label=".", style=filled, fillcolor="#c7f6d4"];
+   node8[label="digito", style=filled, fillcolor="#c7f6d4"];
+   node13[label=".", style=filled, fillcolor="#c7f6d4"];
+   node9[label=".", style=filled, fillcolor="#c7f6d4"];
+   node12[label="+", style=filled, fillcolor="#c7f6d4"];
+   node10[label="digito", style=filled, fillcolor="#c7f6d4"];
+}

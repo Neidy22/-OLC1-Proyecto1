@@ -20,6 +20,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTree;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
  *
@@ -34,6 +37,8 @@ public class mainMenu extends javax.swing.JFrame {
     FileOutputStream outF;
     String nameF;
     int contador;
+    JTree reports;
+    DefaultMutableTreeNode root, trees, afd, afnd, nexts, transitions, errors, outs;
 
     /**
      * Creates new form mainMenu
@@ -41,7 +46,10 @@ public class mainMenu extends javax.swing.JFrame {
     public mainMenu() {
        
         initComponents();
+        //this.jtreeOnScroll();
+        this.initMutables();
         this.setLocationRelativeTo(null);
+        
     }
 
     /**
@@ -69,8 +77,8 @@ public class mainMenu extends javax.swing.JFrame {
         jlblGraph = new javax.swing.JLabel();
         btnNext = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTree = new javax.swing.JTree();
+        scrollTree = new javax.swing.JScrollPane();
+        reportsT = new javax.swing.JTree();
         jMenuBar1 = new javax.swing.JMenuBar();
         jmFile = new javax.swing.JMenu();
         jMNewF = new javax.swing.JMenuItem();
@@ -196,7 +204,16 @@ public class mainMenu extends javax.swing.JFrame {
 
         jtpGraph.addTab("Graphics", jPanel2);
 
-        jScrollPane2.setViewportView(jTree);
+        reportsT.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                reportsTAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        scrollTree.setViewportView(reportsT);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -209,19 +226,16 @@ public class mainMenu extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jtpGraph)
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(scrollTree, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jtpGraph))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(jScrollPane2)))
+                    .addComponent(jtpGraph)
+                    .addComponent(scrollTree))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -392,6 +406,7 @@ public class mainMenu extends javax.swing.JFrame {
             parse = new Analyzers.Syntactical( new Analyzers.Lexical(new StringReader( txtFile.getText())));
 
             parse.parse();
+            jtreeOnScroll();
         }catch (Exception ex) {
             
         }
@@ -409,6 +424,10 @@ public class mainMenu extends javax.swing.JFrame {
             Logger.getLogger(mainMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jMenuErrorActionPerformed
+
+    private void reportsTAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_reportsTAncestorAdded
+      
+    }//GEN-LAST:event_reportsTAncestorAdded
 
     public void setArea(File f){
         String text = "";
@@ -556,6 +575,45 @@ public class mainMenu extends javax.swing.JFrame {
         Desktop.getDesktop().open(obj);
     }
     
+    public void addTree(String nameR){
+        /*
+        File trees = new File("src\\Reports\\ARBOLES_201801671");
+        if(!trees.exists()){ // if folder doesn't exists
+            try{
+                if(trees.mkdir()){ // create the folder
+                 
+                    this.root.add(this.trees);  //add folder to the jTree 
+                    this.trees.add(new DefaultMutableTreeNode(nameR)); // add the new file of a tree in the folder of trees
+                }
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }else{*/
+            //the folder already exists
+        this.trees.add(new DefaultMutableTreeNode(nameR)); // add the new file of a tree in the folder of trees
+        //}
+        
+    }
+    
+    public void jtreeOnScroll(){
+        root = new DefaultMutableTreeNode("Reports"); // create de root of the folder
+        
+        reports = new JTree(root);
+        
+        this.scrollTree.add(reports); // add de JTree to the scroll pane to show in the window 
+    }
+    
+    private void initMutables(){
+         trees = new DefaultMutableTreeNode("ARBOLES_201801671");
+         afd = new DefaultMutableTreeNode("AFD_201801671"); 
+         afnd = new DefaultMutableTreeNode("AFND_201801671"); 
+         nexts= new DefaultMutableTreeNode("SIGUIENTES_201801671"); 
+         transitions = new DefaultMutableTreeNode("TRANSICIONES_201801671"); 
+         errors = new DefaultMutableTreeNode("ERRORES_201801671"); 
+         outs = new DefaultMutableTreeNode("SALIDAS_201801671");
+    }
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -587,6 +645,7 @@ public class mainMenu extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new mainMenu().setVisible(true);
+              
             }
         });
     }
@@ -614,15 +673,15 @@ public class mainMenu extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTree jTree;
     private javax.swing.JLabel jlblGraph;
     private javax.swing.JMenu jmFile;
     private javax.swing.JMenu jmView;
     private javax.swing.JTabbedPane jtpGraph;
     private javax.swing.JTextField jtxtConsole;
+    private javax.swing.JTree reportsT;
+    private javax.swing.JScrollPane scrollTree;
     private javax.swing.JTextArea txtFile;
     // End of variables declaration//GEN-END:variables
 }

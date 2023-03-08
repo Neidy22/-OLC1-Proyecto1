@@ -1,0 +1,18 @@
+digraph AST{
+    rankdir=TB;
+    node22 -> node14;
+    node22 -> node21;
+    node21 -> node20;
+    node20 -> node15;
+    node20 -> node19;
+    node19 -> node16;
+    node19 -> node17;
+   node22[label=".", style=filled, fillcolor="#c7f6d4"];
+   node14[label="digito", style=filled, fillcolor="#c7f6d4"];
+   node21[label="*", style=filled, fillcolor="#c7f6d4"];
+   node20[label="|", style=filled, fillcolor="#c7f6d4"];
+   node15[label="_", style=filled, fillcolor="#c7f6d4"];
+   node19[label="|", style=filled, fillcolor="#c7f6d4"];
+   node16[label="letra", style=filled, fillcolor="#c7f6d4"];
+   node17[label="digito", style=filled, fillcolor="#c7f6d4"];
+}
