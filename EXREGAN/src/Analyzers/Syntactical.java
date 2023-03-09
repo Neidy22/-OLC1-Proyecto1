@@ -407,7 +407,7 @@ class CUP$Syntactical$actions {
             parser.rootT.setName((String)n);
             parser.rootT.graph();
             EXREGAN.trees.add((AST)r);
-            EXREGAN.menu.addTree((String)n);
+            EXREGAN.menu.addTree((String)n, EXREGAN.menu.getTrees());
             System.out.println("Nueva expresión regular"); 
           
               CUP$Syntactical$result = parser.getSymbolFactory().newSymbol("EXPRG",5, ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-3)), ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()), RESULT);

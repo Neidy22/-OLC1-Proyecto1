@@ -100,7 +100,7 @@ EXPRG ::= id:n arrow  PREFIXREGEX:r semicolon
             parser.rootT.setName((String)n);
             parser.rootT.graph();
             EXREGAN.trees.add((AST)r);
-            EXREGAN.menu.addTree((String)n);
+            EXREGAN.menu.addTree((String)n, EXREGAN.menu.getTrees());
             System.out.println("Nueva expresión regular"); 
           :};
 

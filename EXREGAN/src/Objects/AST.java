@@ -4,6 +4,7 @@
  */
 package Objects;
 
+import Main.EXREGAN;
 import java.io.File;
 import java.io.PrintWriter;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -81,12 +82,15 @@ public class AST {
         
        
         //verifico si la carpeta de arboles existe
+        
         File trees = new File("src\\Reports\\ARBOLES_201801671");
         if(!trees.exists()){ // if folder doesn't exists
             try{
                 if(trees.mkdir()){ // create the folder
                  
                     System.out.println("Carpeta de ARBOLES creada");
+                    EXREGAN.menu.addFolder(EXREGAN.menu.getTrees());
+                    
                 }
             }catch(Exception e){
                 e.printStackTrace();
@@ -98,8 +102,8 @@ public class AST {
         
         
         //genero los archivos de salida
-        String dirsvg="src\\Reports\\ARBOLES_201801671\\AST_"+this.name+".png";
-        String dirDot="src\\Reports\\ARBOLES_201801671\\AST_"+this.name+".dot";
+        String dirsvg="src\\Reports\\ARBOLES_201801671\\"+this.name+".png";
+        String dirDot="src\\Reports\\ARBOLES_201801671\\"+this.name+".dot";
         try{
             
             PrintWriter writer= new PrintWriter(dirDot,"UTF-8");

@@ -23,6 +23,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
 /**
  *
@@ -37,8 +38,10 @@ public class mainMenu extends javax.swing.JFrame {
     FileOutputStream outF;
     String nameF;
     int contador;
-    JTree reports;
-    DefaultMutableTreeNode root, trees, afd, afnd, nexts, transitions, errors, outs;
+    
+    private DefaultTreeModel reports;
+    private DefaultMutableTreeNode root, trees, afd, afnd, nexts, transitions, errors, outs;
+   
 
     /**
      * Creates new form mainMenu
@@ -46,8 +49,19 @@ public class mainMenu extends javax.swing.JFrame {
     public mainMenu() {
        
         initComponents();
-        //this.jtreeOnScroll();
-        this.initMutables();
+        
+      
+        root = new DefaultMutableTreeNode("Reports");
+        trees = new DefaultMutableTreeNode("ARBOLES_201801671");
+        afd = new DefaultMutableTreeNode("AFD_201801671");
+        afnd = new DefaultMutableTreeNode("AFND_201801671");
+        nexts = new DefaultMutableTreeNode("SIGUIENTES_201801671");
+        transitions = new DefaultMutableTreeNode("TRANSICIONES_201801671");
+        errors = new DefaultMutableTreeNode("ERRORES_201801671");
+        outs = new DefaultMutableTreeNode("SALIDAS_201801671");
+        
+        reports = new DefaultTreeModel(root);
+        reportsT.setModel(reports);
         this.setLocationRelativeTo(null);
         
     }
@@ -204,6 +218,8 @@ public class mainMenu extends javax.swing.JFrame {
 
         jtpGraph.addTab("Graphics", jPanel2);
 
+        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Reportes");
+        reportsT.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
         reportsT.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 reportsTAncestorAdded(evt);
@@ -406,7 +422,7 @@ public class mainMenu extends javax.swing.JFrame {
             parse = new Analyzers.Syntactical( new Analyzers.Lexical(new StringReader( txtFile.getText())));
 
             parse.parse();
-            jtreeOnScroll();
+           
         }catch (Exception ex) {
             
         }
@@ -575,43 +591,71 @@ public class mainMenu extends javax.swing.JFrame {
         Desktop.getDesktop().open(obj);
     }
     
-    public void addTree(String nameR){
-        /*
-        File trees = new File("src\\Reports\\ARBOLES_201801671");
+    public void addTree(String nameR, DefaultMutableTreeNode parent, String path){
+        //verifico si la carpeta de arboles existe
+        File trees = new File("src\\Reports\\"+path);
         if(!trees.exists()){ // if folder doesn't exists
             try{
                 if(trees.mkdir()){ // create the folder
                  
-                    this.root.add(this.trees);  //add folder to the jTree 
-                    this.trees.add(new DefaultMutableTreeNode(nameR)); // add the new file of a tree in the folder of trees
+                    
+                    //insert the folder in the tree reports
+                    try{
+                        reports.insertNodeInto(parent, root, root.getChildCount());
+                        
+                        // insert the new file into folder in the last position
+                        DefaultMutableTreeNode newTree = new DefaultMutableTreeNode(nameR);
+                        reports.insertNodeInto(newTree, parent, parent.getChildCount());
+                        
+                        System.out.println("Carpeta No: "+root.getChildCount()+ " Archivo No."+parent.getChildCount());
+                    }catch(Exception e){
+                        e.printStackTrace();
+                    }  
                 }
             }catch(Exception e){
                 e.printStackTrace();
             }
-        }else{*/
+        }else{
             //the folder already exists
-        this.trees.add(new DefaultMutableTreeNode(nameR)); // add the new file of a tree in the folder of trees
-        //}
+           try{
+               DefaultMutableTreeNode newTree = new DefaultMutableTreeNode(nameR);
+               reports.insertNodeInto(newTree, parent, parent.getChildCount());
+               System.out.println("Archivo No. "+parent.getChildCount());
+           }catch(Exception e){
+               e.printStackTrace();
+           }
+           
+        }
         
+        
+       
     }
     
-    public void jtreeOnScroll(){
-        root = new DefaultMutableTreeNode("Reports"); // create de root of the folder
-        
-        reports = new JTree(root);
-        
-        this.scrollTree.add(reports); // add de JTree to the scroll pane to show in the window 
+    public void addFolder(DefaultMutableTreeNode parent){
+        //insert the folder in the tree reports
+        try{
+            reports.insertNodeInto(parent, root, root.getChildCount());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
     
-    private void initMutables(){
-         trees = new DefaultMutableTreeNode("ARBOLES_201801671");
-         afd = new DefaultMutableTreeNode("AFD_201801671"); 
-         afnd = new DefaultMutableTreeNode("AFND_201801671"); 
-         nexts= new DefaultMutableTreeNode("SIGUIENTES_201801671"); 
-         transitions = new DefaultMutableTreeNode("TRANSICIONES_201801671"); 
-         errors = new DefaultMutableTreeNode("ERRORES_201801671"); 
-         outs = new DefaultMutableTreeNode("SALIDAS_201801671");
+    public void addTree(String nameR, DefaultMutableTreeNode parent){
+        try{
+            DefaultMutableTreeNode newTree = new DefaultMutableTreeNode(nameR);
+            reports.insertNodeInto(newTree, parent, parent.getChildCount());
+            System.out.println("Archivo No. "+parent.getChildCount());
+           }catch(Exception e){
+               e.printStackTrace();
+           }
+    
     }
+    
+    public DefaultMutableTreeNode getTrees(){
+       return this.trees;         
+    }
+
+
     
     
     /**
