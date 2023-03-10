@@ -1,13 +1,17 @@
 digraph AST{
     rankdir=TB;
-    node18 -> node16;
-    node16 -> node15;
-    node15 -> node14;
-    node14 -> node12;
-    node15 -> node11;
-    node16 -> node10;
-    node18 -> node17;
-   node18[
+    node40 -> node38;
+    node38 -> node37;
+    node37 -> node36;
+    node36 -> node35;
+    node35 -> node34;
+    node34 -> node32;
+    node34 -> node31;
+    node36 -> node30;
+    node37 -> node29;
+    node38 -> node28;
+    node40 -> node39;
+   node40[
 		
 		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="1">
 			
@@ -24,7 +28,7 @@ digraph AST{
 		</table>>
 		shape=plain
            ];
-   node16[
+   node38[
 		
 		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="1">
 			
@@ -41,7 +45,7 @@ digraph AST{
 		</table>>
 		shape=plain
            ];
-   node15[
+   node37[
 		
 		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="1">
 			
@@ -58,13 +62,13 @@ digraph AST{
 		</table>>
 		shape=plain
            ];
-   node14[
+   node36[
 		
 		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="1">
 			
 			<tr> 
 			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>FP</i></td>
-			    <td rowspan = "2" aling= "center" fontsize = "25" bgcolor = "#0000ff30" color="#0000ff80"> <b>+</b></td> 
+			    <td rowspan = "2" aling= "center" fontsize = "25" bgcolor = "#0000ff30" color="#0000ff80"> <b>.</b></td> 
 			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>LP </i></td>
 			</tr>
 			<tr> 
@@ -75,13 +79,47 @@ digraph AST{
 		</table>>
 		shape=plain
            ];
-   node12[
+   node35[
 		
 		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="1">
 			
 			<tr> 
 			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>FP</i></td>
-			    <td rowspan = "2" aling= "center" fontsize = "25" bgcolor = "#0000ff30" color="#0000ff80"> <b>digito</b></td> 
+			    <td rowspan = "2" aling= "center" fontsize = "25" bgcolor = "#0000ff30" color="#0000ff80"> <b>*</b></td> 
+			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>LP </i></td>
+			</tr>
+			<tr> 
+			    <td align="left" bgcolor = "#0000ff11" color="#ee00ee80"><i>true</i></td>
+			    <td align="left" bgcolor = "#0000ff11" color="#ee00ee80"><i>0</i><br align="left"/></td>
+			</tr>
+		
+		</table>>
+		shape=plain
+           ];
+   node34[
+		
+		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="1">
+			
+			<tr> 
+			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>FP</i></td>
+			    <td rowspan = "2" aling= "center" fontsize = "25" bgcolor = "#0000ff30" color="#0000ff80"> <b>|</b></td> 
+			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>LP </i></td>
+			</tr>
+			<tr> 
+			    <td align="left" bgcolor = "#0000ff11" color="#ee00ee80"><i>false</i></td>
+			    <td align="left" bgcolor = "#0000ff11" color="#ee00ee80"><i>0</i><br align="left"/></td>
+			</tr>
+		
+		</table>>
+		shape=plain
+           ];
+   node32[
+		
+		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="1">
+			
+			<tr> 
+			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>FP</i></td>
+			    <td rowspan = "2" aling= "center" fontsize = "25" bgcolor = "#0000ff30" color="#0000ff80"> <b>a</b></td> 
 			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>LP </i></td>
 			</tr>
 			<tr> 
@@ -92,13 +130,13 @@ digraph AST{
 		</table>>
 		shape=plain
            ];
-   node11[
+   node31[
 		
 		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="1">
 			
 			<tr> 
 			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>FP</i></td>
-			    <td rowspan = "2" aling= "center" fontsize = "25" bgcolor = "#0000ff30" color="#0000ff80"> <b>"."</b></td> 
+			    <td rowspan = "2" aling= "center" fontsize = "25" bgcolor = "#0000ff30" color="#0000ff80"> <b>b</b></td> 
 			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>LP </i></td>
 			</tr>
 			<tr> 
@@ -109,13 +147,13 @@ digraph AST{
 		</table>>
 		shape=plain
            ];
-   node10[
+   node30[
 		
 		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="1">
 			
 			<tr> 
 			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>FP</i></td>
-			    <td rowspan = "2" aling= "center" fontsize = "25" bgcolor = "#0000ff30" color="#0000ff80"> <b>digito</b></td> 
+			    <td rowspan = "2" aling= "center" fontsize = "25" bgcolor = "#0000ff30" color="#0000ff80"> <b>a</b></td> 
 			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>LP </i></td>
 			</tr>
 			<tr> 
@@ -126,7 +164,41 @@ digraph AST{
 		</table>>
 		shape=plain
            ];
-   node17[
+   node29[
+		
+		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="1">
+			
+			<tr> 
+			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>FP</i></td>
+			    <td rowspan = "2" aling= "center" fontsize = "25" bgcolor = "#0000ff30" color="#0000ff80"> <b>b</b></td> 
+			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>LP </i></td>
+			</tr>
+			<tr> 
+			    <td align="left" bgcolor = "#0000ff11" color="#ee00ee80"><i>false</i></td>
+			    <td align="left" bgcolor = "#0000ff11" color="#ee00ee80"><i>4</i><br align="left"/></td>
+			</tr>
+		
+		</table>>
+		shape=plain
+           ];
+   node28[
+		
+		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="1">
+			
+			<tr> 
+			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>FP</i></td>
+			    <td rowspan = "2" aling= "center" fontsize = "25" bgcolor = "#0000ff30" color="#0000ff80"> <b>b</b></td> 
+			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>LP </i></td>
+			</tr>
+			<tr> 
+			    <td align="left" bgcolor = "#0000ff11" color="#ee00ee80"><i>false</i></td>
+			    <td align="left" bgcolor = "#0000ff11" color="#ee00ee80"><i>5</i><br align="left"/></td>
+			</tr>
+		
+		</table>>
+		shape=plain
+           ];
+   node39[
 		
 		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="1">
 			
@@ -137,7 +209,7 @@ digraph AST{
 			</tr>
 			<tr> 
 			    <td align="left" bgcolor = "#0000ff11" color="#ee00ee80"><i>false</i></td>
-			    <td align="left" bgcolor = "#0000ff11" color="#ee00ee80"><i>4</i><br align="left"/></td>
+			    <td align="left" bgcolor = "#0000ff11" color="#ee00ee80"><i>6</i><br align="left"/></td>
 			</tr>
 		
 		</table>>

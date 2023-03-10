@@ -42,9 +42,48 @@ public class AST {
     }
     
     public void setAnulables(AST actual){
+        //aplico recorrido post-orden para iniciar de las hojas a la raiz
         if(actual != null){
+            setAnulables(actual.leftSon);
+            setAnulables(actual.rightSon);
+            
+            if(actual.value == "."){ // union
+                //si ambos hijos son anulables, el nodo es anulable
+                if(actual.leftSon.isAnulable() && actual.rightSon.isAnulable()){
+                    actual.anulable = true;
+                }else{
+                    actual.anulable = false;
+                } 
+            }else if(actual.value == "|"){// or
+                if(actual.leftSon.isAnulable() || actual.rightSon.isAnulable()){
+                    actual.anulable = true;
+                }else{
+                    actual.anulable = false;
+                }
+
+            }else if(actual.value == "*"){// cerradura de kleene
+                actual.anulable = true;
+            
+            }else if(actual.value == "+"){ // 1 o mas
+                if(actual.leftSon.isAnulable()){
+                    actual.anulable = true;
+                }else{
+                    actual.anulable = false;
+                }
+            
+            }else if(actual.value == "?"){ //0 o una vez
+                actual.anulable = true;
+            
+            }else if(actual.no > 0){ //es nodo hoja
+                actual.anulable = false;
+            } 
+
            
         }
+    }
+    
+    public void analizeAnulables(String val){
+        
     }
     
     public void setLeafNodes(AST actual){
@@ -86,7 +125,7 @@ public class AST {
 "			    <td align=\"center\" bgcolor = \"#0000ff11\" color=\"#ee00ee80\"><i>LP </i></td>\n" +
 "			</tr>\n" +
 "			<tr> \n" +
-"			    <td align=\"left\" bgcolor = \"#0000ff11\" color=\"#ee00ee80\"><i>A</i></td>\n" +
+"			    <td align=\"left\" bgcolor = \"#0000ff11\" color=\"#ee00ee80\"><i>"+actual.anulable+"</i></td>\n" +
 "			    <td align=\"left\" bgcolor = \"#0000ff11\" color=\"#ee00ee80\"><i>"+actual.no+"</i><br align=\"left\"/></td>\n" +
 "			</tr>\n" +
 "		\n" +
@@ -168,6 +207,7 @@ public class AST {
     public void generateAST(String nameA){
         this.setName(nameA);
         this.setLeafNodes(this);
+        this.setAnulables(this);
         this.graph();
     }
     
