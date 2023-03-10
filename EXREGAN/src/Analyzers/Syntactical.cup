@@ -96,23 +96,27 @@ NOTATION ::= id virgulilla id
 //definicion de las expresiones regulares
 EXPRG ::= id:n arrow  PREFIXREGEX:r semicolon
           {: 
-            parser.rootT = (AST)r;
-            parser.rootT.setName((String)n);
-            parser.rootT.graph();
+            parser.ids++;
+            AST finR = new AST(parser.ids, "#", null, null); 
+            parser.ids++;
+            AST newR = new AST(parser.ids, ".", (AST)r, finR);
+            
+            parser.rootT = newR;
+            parser.rootT.generateAST((String) n);
             EXREGAN.trees.add((AST)r);
             EXREGAN.menu.addTree((String)n, EXREGAN.menu.getTrees());
             System.out.println("Nueva expresión regular"); 
           :};
 
 
-PREFIXREGEX ::= operatorAnd PREFIXREGEX:le PREFIXREGEX:ri
+PREFIXREGEX ::= operatorAnd PREFIXREGEX:ri PREFIXREGEX:le
                 {:
                     System.out.println("nuevo . P");
                     parser.ids++;
                     RESULT = new AST(parser.ids, ".", (AST)le, (AST)ri); 
                 :}
 
-              | operatorOr PREFIXREGEX:le  PREFIXREGEX:ri
+              | operatorOr PREFIXREGEX:ri  PREFIXREGEX:le
                 {:
                     System.out.println("nuevo | P");
                     parser.ids++;
@@ -154,9 +158,9 @@ PREFIXREGEX ::= operatorAnd PREFIXREGEX:le PREFIXREGEX:ri
               | stringVal:o
                 {:  
                     String contenido = (String)o;
-                    String [] concat=contenido.split("\"");//eliminando las comillas de la cadena para que no de error al generar el png
+                    //String [] concat=contenido.split("\"");//eliminando las comillas de la cadena para que no de error al generar el png
                     System.out.println("nuevo string"); 
-                    AST newVal = new AST(parser.ids, concat[1], null, null );
+                    AST newVal = new AST(parser.ids, contenido, null, null );
                     parser.ids++;
                     RESULT = newVal;
 

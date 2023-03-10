@@ -1,18 +1,182 @@
 digraph AST{
     rankdir=TB;
-    node8 -> node0;
+    node10 -> node8;
     node8 -> node7;
     node7 -> node6;
-    node6 -> node1;
     node6 -> node5;
-    node5 -> node2;
     node5 -> node3;
-   node8[label=".", style=filled, fillcolor="#c7f6d4"];
-   node0[label="letra", style=filled, fillcolor="#c7f6d4"];
-   node7[label="*", style=filled, fillcolor="#c7f6d4"];
-   node6[label="|", style=filled, fillcolor="#c7f6d4"];
-   node1[label="_", style=filled, fillcolor="#c7f6d4"];
-   node5[label="|", style=filled, fillcolor="#c7f6d4"];
-   node2[label="letra", style=filled, fillcolor="#c7f6d4"];
-   node3[label="digito", style=filled, fillcolor="#c7f6d4"];
+    node5 -> node2;
+    node6 -> node1;
+    node8 -> node0;
+    node10 -> node9;
+   node10[
+		
+		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="1">
+			
+			<tr> 
+			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>FP</i></td>
+			    <td rowspan = "2" aling= "center" fontsize = "25" bgcolor = "#0000ff30" color="#0000ff80"> <b>.</b></td> 
+			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>LP </i></td>
+			</tr>
+			<tr> 
+			    <td align="left" bgcolor = "#0000ff11" color="#ee00ee80"><i>A</i></td>
+			    <td align="left" bgcolor = "#0000ff11" color="#ee00ee80"><i>0</i><br align="left"/></td>
+			</tr>
+		
+		</table>>
+		shape=plain
+           ];
+   node8[
+		
+		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="1">
+			
+			<tr> 
+			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>FP</i></td>
+			    <td rowspan = "2" aling= "center" fontsize = "25" bgcolor = "#0000ff30" color="#0000ff80"> <b>.</b></td> 
+			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>LP </i></td>
+			</tr>
+			<tr> 
+			    <td align="left" bgcolor = "#0000ff11" color="#ee00ee80"><i>A</i></td>
+			    <td align="left" bgcolor = "#0000ff11" color="#ee00ee80"><i>0</i><br align="left"/></td>
+			</tr>
+		
+		</table>>
+		shape=plain
+           ];
+   node7[
+		
+		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="1">
+			
+			<tr> 
+			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>FP</i></td>
+			    <td rowspan = "2" aling= "center" fontsize = "25" bgcolor = "#0000ff30" color="#0000ff80"> <b>*</b></td> 
+			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>LP </i></td>
+			</tr>
+			<tr> 
+			    <td align="left" bgcolor = "#0000ff11" color="#ee00ee80"><i>A</i></td>
+			    <td align="left" bgcolor = "#0000ff11" color="#ee00ee80"><i>0</i><br align="left"/></td>
+			</tr>
+		
+		</table>>
+		shape=plain
+           ];
+   node6[
+		
+		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="1">
+			
+			<tr> 
+			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>FP</i></td>
+			    <td rowspan = "2" aling= "center" fontsize = "25" bgcolor = "#0000ff30" color="#0000ff80"> <b>|</b></td> 
+			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>LP </i></td>
+			</tr>
+			<tr> 
+			    <td align="left" bgcolor = "#0000ff11" color="#ee00ee80"><i>A</i></td>
+			    <td align="left" bgcolor = "#0000ff11" color="#ee00ee80"><i>0</i><br align="left"/></td>
+			</tr>
+		
+		</table>>
+		shape=plain
+           ];
+   node5[
+		
+		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="1">
+			
+			<tr> 
+			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>FP</i></td>
+			    <td rowspan = "2" aling= "center" fontsize = "25" bgcolor = "#0000ff30" color="#0000ff80"> <b>|</b></td> 
+			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>LP </i></td>
+			</tr>
+			<tr> 
+			    <td align="left" bgcolor = "#0000ff11" color="#ee00ee80"><i>A</i></td>
+			    <td align="left" bgcolor = "#0000ff11" color="#ee00ee80"><i>0</i><br align="left"/></td>
+			</tr>
+		
+		</table>>
+		shape=plain
+           ];
+   node3[
+		
+		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="1">
+			
+			<tr> 
+			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>FP</i></td>
+			    <td rowspan = "2" aling= "center" fontsize = "25" bgcolor = "#0000ff30" color="#0000ff80"> <b>digito</b></td> 
+			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>LP </i></td>
+			</tr>
+			<tr> 
+			    <td align="left" bgcolor = "#0000ff11" color="#ee00ee80"><i>A</i></td>
+			    <td align="left" bgcolor = "#0000ff11" color="#ee00ee80"><i>1</i><br align="left"/></td>
+			</tr>
+		
+		</table>>
+		shape=plain
+           ];
+   node2[
+		
+		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="1">
+			
+			<tr> 
+			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>FP</i></td>
+			    <td rowspan = "2" aling= "center" fontsize = "25" bgcolor = "#0000ff30" color="#0000ff80"> <b>letra</b></td> 
+			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>LP </i></td>
+			</tr>
+			<tr> 
+			    <td align="left" bgcolor = "#0000ff11" color="#ee00ee80"><i>A</i></td>
+			    <td align="left" bgcolor = "#0000ff11" color="#ee00ee80"><i>2</i><br align="left"/></td>
+			</tr>
+		
+		</table>>
+		shape=plain
+           ];
+   node1[
+		
+		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="1">
+			
+			<tr> 
+			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>FP</i></td>
+			    <td rowspan = "2" aling= "center" fontsize = "25" bgcolor = "#0000ff30" color="#0000ff80"> <b>"_"</b></td> 
+			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>LP </i></td>
+			</tr>
+			<tr> 
+			    <td align="left" bgcolor = "#0000ff11" color="#ee00ee80"><i>A</i></td>
+			    <td align="left" bgcolor = "#0000ff11" color="#ee00ee80"><i>3</i><br align="left"/></td>
+			</tr>
+		
+		</table>>
+		shape=plain
+           ];
+   node0[
+		
+		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="1">
+			
+			<tr> 
+			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>FP</i></td>
+			    <td rowspan = "2" aling= "center" fontsize = "25" bgcolor = "#0000ff30" color="#0000ff80"> <b>letra</b></td> 
+			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>LP </i></td>
+			</tr>
+			<tr> 
+			    <td align="left" bgcolor = "#0000ff11" color="#ee00ee80"><i>A</i></td>
+			    <td align="left" bgcolor = "#0000ff11" color="#ee00ee80"><i>4</i><br align="left"/></td>
+			</tr>
+		
+		</table>>
+		shape=plain
+           ];
+   node9[
+		
+		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="1">
+			
+			<tr> 
+			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>FP</i></td>
+			    <td rowspan = "2" aling= "center" fontsize = "25" bgcolor = "#0000ff30" color="#0000ff80"> <b>#</b></td> 
+			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>LP </i></td>
+			</tr>
+			<tr> 
+			    <td align="left" bgcolor = "#0000ff11" color="#ee00ee80"><i>A</i></td>
+			    <td align="left" bgcolor = "#0000ff11" color="#ee00ee80"><i>5</i><br align="left"/></td>
+			</tr>
+		
+		</table>>
+		shape=plain
+           ];
 }

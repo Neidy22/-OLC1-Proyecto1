@@ -403,9 +403,13 @@ class CUP$Syntactical$actions {
 		int rright = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).right;
 		Object r = (Object)((java_cup.runtime.Symbol) CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).value;
 		 
-            parser.rootT = (AST)r;
-            parser.rootT.setName((String)n);
-            parser.rootT.graph();
+            parser.ids++;
+            AST finR = new AST(parser.ids, "#", null, null); 
+            parser.ids++;
+            AST newR = new AST(parser.ids, ".", (AST)r, finR);
+            
+            parser.rootT = newR;
+            parser.rootT.generateAST((String) n);
             EXREGAN.trees.add((AST)r);
             EXREGAN.menu.addTree((String)n, EXREGAN.menu.getTrees());
             System.out.println("Nueva expresión regular"); 
@@ -418,12 +422,12 @@ class CUP$Syntactical$actions {
           case 17: // PREFIXREGEX ::= operatorAnd PREFIXREGEX PREFIXREGEX 
             {
               Object RESULT =null;
-		int leleft = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).left;
-		int leright = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).right;
-		Object le = (Object)((java_cup.runtime.Symbol) CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).value;
-		int rileft = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()).left;
-		int riright = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()).right;
-		Object ri = (Object)((java_cup.runtime.Symbol) CUP$Syntactical$stack.peek()).value;
+		int rileft = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).left;
+		int riright = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).right;
+		Object ri = (Object)((java_cup.runtime.Symbol) CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).value;
+		int leleft = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()).left;
+		int leright = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()).right;
+		Object le = (Object)((java_cup.runtime.Symbol) CUP$Syntactical$stack.peek()).value;
 		
                     System.out.println("nuevo . P");
                     parser.ids++;
@@ -437,12 +441,12 @@ class CUP$Syntactical$actions {
           case 18: // PREFIXREGEX ::= operatorOr PREFIXREGEX PREFIXREGEX 
             {
               Object RESULT =null;
-		int leleft = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).left;
-		int leright = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).right;
-		Object le = (Object)((java_cup.runtime.Symbol) CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).value;
-		int rileft = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()).left;
-		int riright = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()).right;
-		Object ri = (Object)((java_cup.runtime.Symbol) CUP$Syntactical$stack.peek()).value;
+		int rileft = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).left;
+		int riright = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).right;
+		Object ri = (Object)((java_cup.runtime.Symbol) CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).value;
+		int leleft = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()).left;
+		int leright = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()).right;
+		Object le = (Object)((java_cup.runtime.Symbol) CUP$Syntactical$stack.peek()).value;
 		
                     System.out.println("nuevo | P");
                     parser.ids++;
@@ -531,9 +535,9 @@ class CUP$Syntactical$actions {
 		String o = (String)((java_cup.runtime.Symbol) CUP$Syntactical$stack.peek()).value;
 		  
                     String contenido = (String)o;
-                    String [] concat=contenido.split("\"");//eliminando las comillas de la cadena para que no de error al generar el png
+                    //String [] concat=contenido.split("\"");//eliminando las comillas de la cadena para que no de error al generar el png
                     System.out.println("nuevo string"); 
-                    AST newVal = new AST(parser.ids, concat[1], null, null );
+                    AST newVal = new AST(parser.ids, contenido, null, null );
                     parser.ids++;
                     RESULT = newVal;
 
