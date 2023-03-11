@@ -7,6 +7,10 @@ package Objects;
 import Main.EXREGAN;
 import java.io.File;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Set;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 
@@ -22,10 +26,13 @@ public class AST {
     private boolean anulable;
     private int no;
     private int leafs;
+    private ArrayList <Integer> firstPos = new ArrayList<Integer>();
+    private ArrayList <Integer> lastPos = new ArrayList<Integer>();
     private AST leftSon;
     private AST rightSon;
     
     public AST(int i, String v, AST l, AST r){
+      
         this.id = i;
         this.value = v;
         this.leftSon = l;
@@ -40,6 +47,8 @@ public class AST {
     public String getName(){
         return this.name;
     }
+    
+    
     
     public void setAnulables(AST actual){
         //aplico recorrido post-orden para iniciar de las hojas a la raiz
@@ -82,10 +91,6 @@ public class AST {
         }
     }
     
-    public void analizeAnulables(String val){
-        
-    }
-    
     public void setLeafNodes(AST actual){
         if(actual != null){
             if(actual.leftSon == null){
@@ -111,7 +116,52 @@ public class AST {
         return this.anulable;
     }
     
+    public void setFirst(AST actual){
+        if(actual != null){
+            setFirst(actual.leftSon);
+            setFirst(actual.rightSon);
+            
+            if(actual.value == "."){ // union
+                //si el hijo iz es anulable, first pos = first pos a + first pos b
+                if(actual.leftSon.isAnulable()){
+                    combineList(actual.leftSon.firstPos, actual.rightSon.firstPos, actual);
+                }else{
+                    //first pos = first pos a
+                    actual.firstPos.addAll(actual.leftSon.firstPos);
+                } 
+            }else if(actual.value == "|"){// or
+                //first pos = first pos a + first pos b
+                combineList(actual.leftSon.firstPos, actual.rightSon.firstPos, actual);
+                
+            }else if(actual.value == "*"){// cerradura de kleene
+                //first pos = first pos a
+                actual.firstPos.addAll(actual.leftSon.firstPos);
+                
+            }else if(actual.value == "+"){ // 1 o mas
+                //first pos = first pos a
+                actual.firstPos.addAll(actual.leftSon.firstPos);
+                
+            }else if(actual.value == "?"){ //0 o una vez
+                //first pos = first pos a
+                actual.firstPos.addAll(actual.leftSon.firstPos);
+                
+            }else if(actual.no > 0){ //es nodo hoja
+                //first pos = no de hoja
+                actual.firstPos.add(actual.no);
+            } 
+
+           
+        }
+            
+    }
     
+    
+    public void combineList(ArrayList listA, ArrayList listB, AST actual){
+        Set<Integer> setCombined = new HashSet<>(listA);
+        setCombined.addAll(listB);
+        actual.firstPos.addAll(setCombined);
+        System.out.println(actual.firstPos);
+    }
     
     public void preorderGraph(AST actual, String [] nodes){
         if(actual != null){
@@ -120,7 +170,7 @@ public class AST {
 "		label=<<table border=\"0\" cellborder=\"1\" cellspacing=\"0\" cellpadding=\"1\">\n" +
 "			\n" +
 "			<tr> \n" +
-"			    <td align=\"center\" bgcolor = \"#0000ff11\" color=\"#ee00ee80\"><i>FP</i></td>\n" +
+"			    <td align=\"center\" bgcolor = \"#0000ff11\" color=\"#ee00ee80\"><i>"+actual.firstPos+"</i></td>\n" +
 "			    <td rowspan = \"2\" aling= \"center\" fontsize = \"25\" bgcolor = \"#0000ff30\" color=\"#0000ff80\"> <b>"+actual.value+"</b></td> \n" +
 "			    <td align=\"center\" bgcolor = \"#0000ff11\" color=\"#ee00ee80\"><i>LP </i></td>\n" +
 "			</tr>\n" +
@@ -208,6 +258,7 @@ public class AST {
         this.setName(nameA);
         this.setLeafNodes(this);
         this.setAnulables(this);
+        this.setFirst(this);
         this.graph();
     }
     

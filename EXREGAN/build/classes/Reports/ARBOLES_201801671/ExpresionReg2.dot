@@ -12,7 +12,7 @@ digraph AST{
 		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="1">
 			
 			<tr> 
-			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>FP</i></td>
+			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>[1]</i></td>
 			    <td rowspan = "2" aling= "center" fontsize = "25" bgcolor = "#0000ff30" color="#0000ff80"> <b>.</b></td> 
 			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>LP </i></td>
 			</tr>
@@ -29,7 +29,7 @@ digraph AST{
 		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="1">
 			
 			<tr> 
-			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>FP</i></td>
+			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>[1]</i></td>
 			    <td rowspan = "2" aling= "center" fontsize = "25" bgcolor = "#0000ff30" color="#0000ff80"> <b>.</b></td> 
 			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>LP </i></td>
 			</tr>
@@ -46,7 +46,7 @@ digraph AST{
 		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="1">
 			
 			<tr> 
-			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>FP</i></td>
+			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>[1]</i></td>
 			    <td rowspan = "2" aling= "center" fontsize = "25" bgcolor = "#0000ff30" color="#0000ff80"> <b>.</b></td> 
 			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>LP </i></td>
 			</tr>
@@ -63,7 +63,7 @@ digraph AST{
 		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="1">
 			
 			<tr> 
-			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>FP</i></td>
+			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>[1]</i></td>
 			    <td rowspan = "2" aling= "center" fontsize = "25" bgcolor = "#0000ff30" color="#0000ff80"> <b>+</b></td> 
 			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>LP </i></td>
 			</tr>
@@ -80,7 +80,7 @@ digraph AST{
 		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="1">
 			
 			<tr> 
-			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>FP</i></td>
+			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>[1]</i></td>
 			    <td rowspan = "2" aling= "center" fontsize = "25" bgcolor = "#0000ff30" color="#0000ff80"> <b>digito</b></td> 
 			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>LP </i></td>
 			</tr>
@@ -97,7 +97,7 @@ digraph AST{
 		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="1">
 			
 			<tr> 
-			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>FP</i></td>
+			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>[2]</i></td>
 			    <td rowspan = "2" aling= "center" fontsize = "25" bgcolor = "#0000ff30" color="#0000ff80"> <b>"."</b></td> 
 			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>LP </i></td>
 			</tr>
@@ -114,7 +114,7 @@ digraph AST{
 		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="1">
 			
 			<tr> 
-			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>FP</i></td>
+			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>[3]</i></td>
 			    <td rowspan = "2" aling= "center" fontsize = "25" bgcolor = "#0000ff30" color="#0000ff80"> <b>digito</b></td> 
 			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>LP </i></td>
 			</tr>
@@ -131,7 +131,7 @@ digraph AST{
 		label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="1">
 			
 			<tr> 
-			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>FP</i></td>
+			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>[4]</i></td>
 			    <td rowspan = "2" aling= "center" fontsize = "25" bgcolor = "#0000ff30" color="#0000ff80"> <b>#</b></td> 
 			    <td align="center" bgcolor = "#0000ff11" color="#ee00ee80"><i>LP </i></td>
 			</tr>
