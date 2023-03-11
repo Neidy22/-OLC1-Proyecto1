@@ -124,14 +124,14 @@ public class AST {
             if(actual.value == "."){ // union
                 //si el hijo iz es anulable, first pos = first pos a + first pos b
                 if(actual.leftSon.isAnulable()){
-                    combineList(actual.leftSon.firstPos, actual.rightSon.firstPos, actual);
+                    combineListF(actual.leftSon.firstPos, actual.rightSon.firstPos, actual);
                 }else{
                     //first pos = first pos a
                     actual.firstPos.addAll(actual.leftSon.firstPos);
                 } 
             }else if(actual.value == "|"){// or
                 //first pos = first pos a + first pos b
-                combineList(actual.leftSon.firstPos, actual.rightSon.firstPos, actual);
+                combineListF(actual.leftSon.firstPos, actual.rightSon.firstPos, actual);
                 
             }else if(actual.value == "*"){// cerradura de kleene
                 //first pos = first pos a
@@ -155,13 +155,63 @@ public class AST {
             
     }
     
+    public void setLast(AST actual){
+        //recorrido post-orden
+        if(actual != null){
+            setLast(actual.leftSon);
+            setLast(actual.rightSon);
+            
+            if(actual.value == "."){ // union
+                //si el nodo b es anulable, last pos = last pos a + last pos b
+                if(actual.rightSon.isAnulable()){
+                    combineListL(actual.leftSon.lastPos, actual.rightSon.lastPos, actual);
+                }else{
+                    //last pos = last pos b
+                    actual.lastPos.addAll(actual.rightSon.lastPos);
+                } 
+            }else if(actual.value == "|"){// or
+                //last pos = last pos a + last pos b
+                combineListL(actual.leftSon.lastPos, actual.rightSon.lastPos, actual);
+                
+            }else if(actual.value == "*"){// cerradura de kleene
+                //last pos = last pos a
+                actual.lastPos.addAll(actual.leftSon.lastPos);
+                
+            }else if(actual.value == "+"){ // 1 o mas
+                //last pos = last pos a
+                actual.lastPos.addAll(actual.leftSon.lastPos);
+                
+            }else if(actual.value == "?"){ //0 o una vez
+                //last pos = last pos a
+                actual.lastPos.addAll(actual.leftSon.lastPos);
+                
+            }else if(actual.no > 0){ //es nodo hoja
+                //first pos = no de hoja
+                actual.lastPos.add(actual.no);
+            } 
+
+           
+        }
+            
+    }
     
-    public void combineList(ArrayList listA, ArrayList listB, AST actual){
+    
+    public void combineListF(ArrayList listA, ArrayList listB, AST actual){
         Set<Integer> setCombined = new HashSet<>(listA);
         setCombined.addAll(listB);
         actual.firstPos.addAll(setCombined);
         System.out.println(actual.firstPos);
     }
+    
+    public void combineListL(ArrayList listA, ArrayList listB, AST actual){
+        Set<Integer> setCombined = new HashSet<>(listA);
+        setCombined.addAll(listB);
+        actual.lastPos.addAll(setCombined);
+        System.out.println(actual.lastPos);
+    }
+    
+    
+    
     
     public void preorderGraph(AST actual, String [] nodes){
         if(actual != null){
@@ -172,7 +222,7 @@ public class AST {
 "			<tr> \n" +
 "			    <td align=\"center\" bgcolor = \"#0000ff11\" color=\"#ee00ee80\"><i>"+actual.firstPos+"</i></td>\n" +
 "			    <td rowspan = \"2\" aling= \"center\" fontsize = \"25\" bgcolor = \"#0000ff30\" color=\"#0000ff80\"> <b>"+actual.value+"</b></td> \n" +
-"			    <td align=\"center\" bgcolor = \"#0000ff11\" color=\"#ee00ee80\"><i>LP </i></td>\n" +
+"			    <td align=\"center\" bgcolor = \"#0000ff11\" color=\"#ee00ee80\"><i>"+actual.lastPos+"</i></td>\n" +
 "			</tr>\n" +
 "			<tr> \n" +
 "			    <td align=\"left\" bgcolor = \"#0000ff11\" color=\"#ee00ee80\"><i>"+actual.anulable+"</i></td>\n" +
@@ -259,6 +309,7 @@ public class AST {
         this.setLeafNodes(this);
         this.setAnulables(this);
         this.setFirst(this);
+        this.setLast(this);
         this.graph();
     }
     
