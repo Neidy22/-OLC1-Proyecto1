@@ -34,16 +34,17 @@ public class Syntactical extends java_cup.runtime.lr_parser {
   /** Production table. */
   protected static final short _production_table[][] = 
     unpackFromStrings(new String[] {
-    "\000\035\000\002\002\004\000\002\002\004\000\002\003" +
-    "\004\000\002\003\004\000\002\003\004\000\002\003\004" +
-    "\000\002\003\004\000\002\003\003\000\002\004\003\000" +
-    "\002\004\003\000\002\004\004\000\002\006\010\000\002" +
-    "\010\005\000\002\010\005\000\002\010\003\000\002\010" +
-    "\003\000\002\007\006\000\002\012\005\000\002\012\005" +
-    "\000\002\012\004\000\002\012\004\000\002\012\004\000" +
-    "\002\012\005\000\002\012\003\000\002\005\006\000\002" +
-    "\011\005\000\002\011\003\000\002\013\005\000\002\013" +
-    "\003" });
+    "\000\040\000\002\002\004\000\002\002\004\000\002\002" +
+    "\004\000\002\002\004\000\002\003\004\000\002\003\004" +
+    "\000\002\003\004\000\002\003\004\000\002\003\004\000" +
+    "\002\003\003\000\002\004\003\000\002\004\003\000\002" +
+    "\004\004\000\002\006\010\000\002\010\005\000\002\010" +
+    "\005\000\002\010\003\000\002\010\003\000\002\007\006" +
+    "\000\002\012\005\000\002\012\005\000\002\012\004\000" +
+    "\002\012\004\000\002\012\004\000\002\012\005\000\002" +
+    "\012\003\000\002\012\003\000\002\005\006\000\002\011" +
+    "\005\000\002\011\003\000\002\013\005\000\002\013\003" +
+    "" });
 
   /** Access to production table. */
   public short[][] production_table() {return _production_table;}
@@ -51,63 +52,70 @@ public class Syntactical extends java_cup.runtime.lr_parser {
   /** Parse-action table. */
   protected static final short[][] _action_table = 
     unpackFromStrings(new String[] {
-    "\000\077\000\004\020\004\001\002\000\020\003\020\004" +
-    "\016\005\022\007\007\015\014\021\010\026\013\001\002" +
-    "\000\004\002\006\001\002\000\004\002\001\001\002\000" +
-    "\006\023\054\024\055\001\002\000\004\002\ufffa\001\002" +
-    "\000\004\002\000\001\002\000\020\003\020\004\016\005" +
-    "\022\007\007\015\014\021\010\026\013\001\002\000\004" +
-    "\023\030\001\002\000\004\015\027\001\002\000\020\003" +
-    "\ufff9\004\ufff9\005\ufff9\007\ufff9\015\ufff9\021\ufff9\026\ufff9" +
-    "\001\002\000\020\003\020\004\016\005\022\007\007\015" +
-    "\014\021\010\026\013\001\002\000\020\003\020\004\016" +
-    "\005\022\007\007\015\014\021\010\026\013\001\002\000" +
-    "\020\003\020\004\016\005\022\007\007\015\014\021\010" +
-    "\026\013\001\002\000\020\003\ufff8\004\ufff8\005\ufff8\007" +
-    "\ufff8\015\ufff8\021\ufff8\026\ufff8\001\002\000\020\003\020" +
-    "\004\016\005\022\007\007\015\014\021\010\026\013\001" +
-    "\002\000\004\002\ufffe\001\002\000\004\002\ufffb\001\002" +
-    "\000\004\002\ufffc\001\002\000\004\002\uffff\001\002\000" +
-    "\020\003\ufff7\004\ufff7\005\ufff7\007\ufff7\015\ufff7\021\ufff7" +
-    "\026\ufff7\001\002\000\004\007\031\001\002\000\004\024" +
-    "\032\001\002\000\006\007\036\025\035\001\002\000\004" +
-    "\022\ufff2\001\002\000\004\022\052\001\002\000\010\016" +
-    "\045\017\046\022\uffe5\001\002\000\010\016\040\017\041" +
-    "\022\uffe7\001\002\000\004\022\ufff3\001\002\000\004\007" +
-    "\044\001\002\000\004\007\042\001\002\000\004\022\ufff5" +
-    "\001\002\000\004\022\uffe8\001\002\000\006\016\040\022" +
-    "\uffe7\001\002\000\004\025\051\001\002\000\004\025\047" +
-    "\001\002\000\004\022\ufff4\001\002\000\004\022\uffe6\001" +
-    "\002\000\006\016\045\022\uffe5\001\002\000\020\003\ufff6" +
-    "\004\ufff6\005\ufff6\007\ufff6\015\ufff6\021\ufff6\026\ufff6\001" +
-    "\002\000\004\002\ufffd\001\002\000\004\006\100\001\002" +
-    "\000\020\006\061\010\057\011\060\012\065\013\062\014" +
-    "\064\020\063\001\002\000\004\022\077\001\002\000\020" +
-    "\006\061\010\057\011\060\012\065\013\062\014\064\020" +
-    "\063\001\002\000\020\006\061\010\057\011\060\012\065" +
-    "\013\062\014\064\020\063\001\002\000\022\006\uffea\010" +
-    "\uffea\011\uffea\012\uffea\013\uffea\014\uffea\020\uffea\022\uffea" +
-    "\001\002\000\020\006\061\010\057\011\060\012\065\013" +
-    "\062\014\064\020\063\001\002\000\004\007\070\001\002" +
-    "\000\020\006\061\010\057\011\060\012\065\013\062\014" +
-    "\064\020\063\001\002\000\020\006\061\010\057\011\060" +
-    "\012\065\013\062\014\064\020\063\001\002\000\022\006" +
-    "\uffee\010\uffee\011\uffee\012\uffee\013\uffee\014\uffee\020\uffee" +
-    "\022\uffee\001\002\000\022\006\uffec\010\uffec\011\uffec\012" +
-    "\uffec\013\uffec\014\uffec\020\uffec\022\uffec\001\002\000\004" +
-    "\021\071\001\002\000\022\006\uffeb\010\uffeb\011\uffeb\012" +
-    "\uffeb\013\uffeb\014\uffeb\020\uffeb\022\uffeb\001\002\000\022" +
-    "\006\uffed\010\uffed\011\uffed\012\uffed\013\uffed\014\uffed\020" +
-    "\uffed\022\uffed\001\002\000\020\006\061\010\057\011\060" +
-    "\012\065\013\062\014\064\020\063\001\002\000\022\006" +
-    "\uffef\010\uffef\011\uffef\012\uffef\013\uffef\014\uffef\020\uffef" +
-    "\022\uffef\001\002\000\020\006\061\010\057\011\060\012" +
-    "\065\013\062\014\064\020\063\001\002\000\022\006\ufff0" +
-    "\010\ufff0\011\ufff0\012\ufff0\013\ufff0\014\ufff0\020\ufff0\022" +
-    "\ufff0\001\002\000\020\003\ufff1\004\ufff1\005\ufff1\007\ufff1" +
-    "\015\ufff1\021\ufff1\026\ufff1\001\002\000\004\022\101\001" +
-    "\002\000\020\003\uffe9\004\uffe9\005\uffe9\007\uffe9\015\uffe9" +
-    "\021\uffe9\026\uffe9\001\002" });
+    "\000\104\000\010\004\007\005\004\020\005\001\002\000" +
+    "\010\004\007\005\004\020\005\001\002\000\020\003\023" +
+    "\004\021\005\025\007\012\015\017\021\013\027\016\001" +
+    "\002\000\004\002\011\001\002\000\010\004\007\005\004" +
+    "\020\005\001\002\000\004\002\uffff\001\002\000\004\002" +
+    "\001\001\002\000\006\023\057\024\060\001\002\000\004" +
+    "\002\ufff8\001\002\000\004\002\000\001\002\000\020\003" +
+    "\023\004\021\005\025\007\012\015\017\021\013\027\016" +
+    "\001\002\000\004\023\033\001\002\000\004\015\032\001" +
+    "\002\000\020\003\ufff7\004\ufff7\005\ufff7\007\ufff7\015\ufff7" +
+    "\021\ufff7\027\ufff7\001\002\000\020\003\023\004\021\005" +
+    "\025\007\012\015\017\021\013\027\016\001\002\000\020" +
+    "\003\023\004\021\005\025\007\012\015\017\021\013\027" +
+    "\016\001\002\000\020\003\023\004\021\005\025\007\012" +
+    "\015\017\021\013\027\016\001\002\000\020\003\ufff6\004" +
+    "\ufff6\005\ufff6\007\ufff6\015\ufff6\021\ufff6\027\ufff6\001\002" +
+    "\000\020\003\023\004\021\005\025\007\012\015\017\021" +
+    "\013\027\016\001\002\000\004\002\ufffc\001\002\000\004" +
+    "\002\ufff9\001\002\000\004\002\ufffa\001\002\000\004\002" +
+    "\ufffd\001\002\000\020\003\ufff5\004\ufff5\005\ufff5\007\ufff5" +
+    "\015\ufff5\021\ufff5\027\ufff5\001\002\000\004\007\034\001" +
+    "\002\000\004\024\035\001\002\000\006\007\042\025\040" +
+    "\001\002\000\004\022\ufff0\001\002\000\004\022\055\001" +
+    "\002\000\010\016\050\017\051\022\uffe2\001\002\000\004" +
+    "\022\ufff1\001\002\000\010\016\043\017\044\022\uffe4\001" +
+    "\002\000\004\007\047\001\002\000\004\007\045\001\002" +
+    "\000\004\022\ufff3\001\002\000\004\022\uffe5\001\002\000" +
+    "\006\016\043\022\uffe4\001\002\000\004\025\054\001\002" +
+    "\000\004\025\052\001\002\000\004\022\ufff2\001\002\000" +
+    "\004\022\uffe3\001\002\000\006\016\050\022\uffe2\001\002" +
+    "\000\020\003\ufff4\004\ufff4\005\ufff4\007\ufff4\015\ufff4\021" +
+    "\ufff4\027\ufff4\001\002\000\004\002\ufffb\001\002\000\004" +
+    "\006\104\001\002\000\022\006\066\010\065\011\071\012" +
+    "\062\013\070\014\063\020\067\026\064\001\002\000\004" +
+    "\022\103\001\002\000\022\006\066\010\065\011\071\012" +
+    "\062\013\070\014\063\020\067\026\064\001\002\000\022" +
+    "\006\066\010\065\011\071\012\062\013\070\014\063\020" +
+    "\067\026\064\001\002\000\024\006\uffe7\010\uffe7\011\uffe7" +
+    "\012\uffe7\013\uffe7\014\uffe7\020\uffe7\022\uffe7\026\uffe7\001" +
+    "\002\000\022\006\066\010\065\011\071\012\062\013\070" +
+    "\014\063\020\067\026\064\001\002\000\024\006\uffe8\010" +
+    "\uffe8\011\uffe8\012\uffe8\013\uffe8\014\uffe8\020\uffe8\022\uffe8" +
+    "\026\uffe8\001\002\000\004\007\075\001\002\000\022\006" +
+    "\066\010\065\011\071\012\062\013\070\014\063\020\067" +
+    "\026\064\001\002\000\022\006\066\010\065\011\071\012" +
+    "\062\013\070\014\063\020\067\026\064\001\002\000\022" +
+    "\006\066\010\065\011\071\012\062\013\070\014\063\020" +
+    "\067\026\064\001\002\000\024\006\uffed\010\uffed\011\uffed" +
+    "\012\uffed\013\uffed\014\uffed\020\uffed\022\uffed\026\uffed\001" +
+    "\002\000\024\006\uffeb\010\uffeb\011\uffeb\012\uffeb\013\uffeb" +
+    "\014\uffeb\020\uffeb\022\uffeb\026\uffeb\001\002\000\004\021" +
+    "\076\001\002\000\024\006\uffe9\010\uffe9\011\uffe9\012\uffe9" +
+    "\013\uffe9\014\uffe9\020\uffe9\022\uffe9\026\uffe9\001\002\000" +
+    "\022\006\066\010\065\011\071\012\062\013\070\014\063" +
+    "\020\067\026\064\001\002\000\024\006\uffee\010\uffee\011" +
+    "\uffee\012\uffee\013\uffee\014\uffee\020\uffee\022\uffee\026\uffee" +
+    "\001\002\000\024\006\uffea\010\uffea\011\uffea\012\uffea\013" +
+    "\uffea\014\uffea\020\uffea\022\uffea\026\uffea\001\002\000\024" +
+    "\006\uffec\010\uffec\011\uffec\012\uffec\013\uffec\014\uffec\020" +
+    "\uffec\022\uffec\026\uffec\001\002\000\020\003\uffef\004\uffef" +
+    "\005\uffef\007\uffef\015\uffef\021\uffef\027\uffef\001\002\000" +
+    "\004\022\105\001\002\000\020\003\uffe6\004\uffe6\005\uffe6" +
+    "\007\uffe6\015\uffe6\021\uffe6\027\uffe6\001\002\000\004\002" +
+    "\ufffe\001\002" });
 
   /** Access to parse-action table. */
   public short[][] action_table() {return _action_table;}
@@ -115,33 +123,35 @@ public class Syntactical extends java_cup.runtime.lr_parser {
   /** <code>reduce_goto</code> table. */
   protected static final short[][] _reduce_table = 
     unpackFromStrings(new String[] {
-    "\000\077\000\004\002\004\001\001\000\014\003\010\004" +
-    "\011\005\016\006\014\007\020\001\001\000\002\001\001" +
+    "\000\104\000\004\002\005\001\001\000\004\002\105\001" +
+    "\001\000\014\003\013\004\014\005\021\006\017\007\023" +
+    "\001\001\000\002\001\001\000\004\002\007\001\001\000" +
+    "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
+    "\001\001\000\002\001\001\000\014\003\055\004\014\005" +
+    "\021\006\017\007\023\001\001\000\002\001\001\000\002" +
+    "\001\001\000\002\001\001\000\014\003\030\004\014\005" +
+    "\021\006\017\007\023\001\001\000\014\003\027\004\014" +
+    "\005\021\006\017\007\023\001\001\000\014\003\026\004" +
+    "\014\005\021\006\017\007\023\001\001\000\002\001\001" +
+    "\000\014\003\025\004\014\005\021\006\017\007\023\001" +
+    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
     "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
-    "\002\001\001\000\014\003\052\004\011\005\016\006\014" +
-    "\007\020\001\001\000\002\001\001\000\002\001\001\000" +
-    "\002\001\001\000\014\003\025\004\011\005\016\006\014" +
-    "\007\020\001\001\000\014\003\024\004\011\005\016\006" +
-    "\014\007\020\001\001\000\014\003\023\004\011\005\016" +
-    "\006\014\007\020\001\001\000\002\001\001\000\014\003" +
-    "\022\004\011\005\016\006\014\007\020\001\001\000\002" +
-    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
-    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
-    "\000\010\010\033\011\036\013\032\001\001\000\002\001" +
-    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
-    "\000\002\001\001\000\004\011\042\001\001\000\002\001" +
-    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
-    "\000\004\013\047\001\001\000\002\001\001\000\002\001" +
-    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
-    "\000\002\001\001\000\002\001\001\000\004\012\055\001" +
-    "\001\000\002\001\001\000\004\012\074\001\001\000\004" +
-    "\012\072\001\001\000\002\001\001\000\004\012\071\001" +
-    "\001\000\002\001\001\000\004\012\066\001\001\000\004" +
-    "\012\065\001\001\000\002\001\001\000\002\001\001\000" +
+    "\002\001\001\000\010\010\036\011\040\013\035\001\001" +
+    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
+    "\002\001\001\000\002\001\001\000\004\011\045\001\001" +
+    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
+    "\002\001\001\000\004\013\052\001\001\000\002\001\001" +
+    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
     "\002\001\001\000\002\001\001\000\002\001\001\000\004" +
-    "\012\073\001\001\000\002\001\001\000\004\012\075\001" +
-    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
-    "\000\002\001\001" });
+    "\012\060\001\001\000\002\001\001\000\004\012\101\001" +
+    "\001\000\004\012\100\001\001\000\002\001\001\000\004" +
+    "\012\076\001\001\000\002\001\001\000\002\001\001\000" +
+    "\004\012\073\001\001\000\004\012\071\001\001\000\004" +
+    "\012\072\001\001\000\002\001\001\000\002\001\001\000" +
+    "\002\001\001\000\002\001\001\000\004\012\077\001\001" +
+    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
+    "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
+    "\001\001" });
 
   /** Access to <code>reduce_goto</code> table. */
   public short[][] reduce_table() {return _reduce_table;}
@@ -267,7 +277,25 @@ class CUP$Syntactical$actions {
           return CUP$Syntactical$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 2: // PROGRAMBODY ::= comment PROGRAMBODY 
+          case 2: // INICIO ::= comment INICIO 
+            {
+              Object RESULT =null;
+
+              CUP$Syntactical$result = parser.getSymbolFactory().newSymbol("INICIO",0, ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)), ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()), RESULT);
+            }
+          return CUP$Syntactical$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 3: // INICIO ::= multicomment INICIO 
+            {
+              Object RESULT =null;
+
+              CUP$Syntactical$result = parser.getSymbolFactory().newSymbol("INICIO",0, ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)), ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()), RESULT);
+            }
+          return CUP$Syntactical$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 4: // PROGRAMBODY ::= comment PROGRAMBODY 
             {
               Object RESULT =null;
 
@@ -276,7 +304,7 @@ class CUP$Syntactical$actions {
           return CUP$Syntactical$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 3: // PROGRAMBODY ::= multicomment PROGRAMBODY 
+          case 5: // PROGRAMBODY ::= multicomment PROGRAMBODY 
             {
               Object RESULT =null;
 
@@ -285,7 +313,7 @@ class CUP$Syntactical$actions {
           return CUP$Syntactical$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 4: // PROGRAMBODY ::= DEFINITION PROGRAMBODY 
+          case 6: // PROGRAMBODY ::= DEFINITION PROGRAMBODY 
             {
               Object RESULT =null;
 
@@ -294,7 +322,7 @@ class CUP$Syntactical$actions {
           return CUP$Syntactical$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 5: // PROGRAMBODY ::= EVALUATION PROGRAMBODY 
+          case 7: // PROGRAMBODY ::= EVALUATION PROGRAMBODY 
             {
               Object RESULT =null;
 
@@ -303,7 +331,7 @@ class CUP$Syntactical$actions {
           return CUP$Syntactical$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 6: // PROGRAMBODY ::= error PROGRAMBODY 
+          case 8: // PROGRAMBODY ::= error PROGRAMBODY 
             {
               Object RESULT =null;
 
@@ -312,7 +340,7 @@ class CUP$Syntactical$actions {
           return CUP$Syntactical$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 7: // PROGRAMBODY ::= rightCurlyB 
+          case 9: // PROGRAMBODY ::= rightCurlyB 
             {
               Object RESULT =null;
 
@@ -321,7 +349,7 @@ class CUP$Syntactical$actions {
           return CUP$Syntactical$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 8: // DEFINITION ::= CONJUNTO 
+          case 10: // DEFINITION ::= CONJUNTO 
             {
               Object RESULT =null;
 
@@ -330,7 +358,7 @@ class CUP$Syntactical$actions {
           return CUP$Syntactical$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 9: // DEFINITION ::= EXPRG 
+          case 11: // DEFINITION ::= EXPRG 
             {
               Object RESULT =null;
 
@@ -339,7 +367,7 @@ class CUP$Syntactical$actions {
           return CUP$Syntactical$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 10: // DEFINITION ::= separator separator 
+          case 12: // DEFINITION ::= separator separator 
             {
               Object RESULT =null;
 
@@ -348,7 +376,7 @@ class CUP$Syntactical$actions {
           return CUP$Syntactical$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 11: // CONJUNTO ::= conj colon id arrow NOTATION semicolon 
+          case 13: // CONJUNTO ::= conj colon id arrow NOTATION semicolon 
             {
               Object RESULT =null;
 		 System.out.println("Nuevo conjunto"); 
@@ -357,7 +385,7 @@ class CUP$Syntactical$actions {
           return CUP$Syntactical$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 12: // NOTATION ::= id virgulilla id 
+          case 14: // NOTATION ::= id virgulilla id 
             {
               Object RESULT =null;
 
@@ -366,7 +394,7 @@ class CUP$Syntactical$actions {
           return CUP$Syntactical$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 13: // NOTATION ::= asciiChar virgulilla asciiChar 
+          case 15: // NOTATION ::= asciiChar virgulilla asciiChar 
             {
               Object RESULT =null;
 
@@ -375,7 +403,7 @@ class CUP$Syntactical$actions {
           return CUP$Syntactical$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 14: // NOTATION ::= LISTVAL 
+          case 16: // NOTATION ::= LISTVAL 
             {
               Object RESULT =null;
 
@@ -384,7 +412,7 @@ class CUP$Syntactical$actions {
           return CUP$Syntactical$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 15: // NOTATION ::= ASCIIS 
+          case 17: // NOTATION ::= ASCIIS 
             {
               Object RESULT =null;
 
@@ -393,7 +421,7 @@ class CUP$Syntactical$actions {
           return CUP$Syntactical$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 16: // EXPRG ::= id arrow PREFIXREGEX semicolon 
+          case 18: // EXPRG ::= id arrow PREFIXREGEX semicolon 
             {
               Object RESULT =null;
 		int nleft = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-3)).left;
@@ -419,7 +447,7 @@ class CUP$Syntactical$actions {
           return CUP$Syntactical$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 17: // PREFIXREGEX ::= operatorAnd PREFIXREGEX PREFIXREGEX 
+          case 19: // PREFIXREGEX ::= operatorAnd PREFIXREGEX PREFIXREGEX 
             {
               Object RESULT =null;
 		int rileft = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).left;
@@ -438,7 +466,7 @@ class CUP$Syntactical$actions {
           return CUP$Syntactical$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 18: // PREFIXREGEX ::= operatorOr PREFIXREGEX PREFIXREGEX 
+          case 20: // PREFIXREGEX ::= operatorOr PREFIXREGEX PREFIXREGEX 
             {
               Object RESULT =null;
 		int rileft = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).left;
@@ -458,7 +486,7 @@ class CUP$Syntactical$actions {
           return CUP$Syntactical$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 19: // PREFIXREGEX ::= operatorZeroMore PREFIXREGEX 
+          case 21: // PREFIXREGEX ::= operatorZeroMore PREFIXREGEX 
             {
               Object RESULT =null;
 		int leleft = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()).left;
@@ -475,7 +503,7 @@ class CUP$Syntactical$actions {
           return CUP$Syntactical$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 20: // PREFIXREGEX ::= operatorOneMore PREFIXREGEX 
+          case 22: // PREFIXREGEX ::= operatorOneMore PREFIXREGEX 
             {
               Object RESULT =null;
 		int leleft = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()).left;
@@ -492,7 +520,7 @@ class CUP$Syntactical$actions {
           return CUP$Syntactical$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 21: // PREFIXREGEX ::= operatorZeroOne PREFIXREGEX 
+          case 23: // PREFIXREGEX ::= operatorZeroOne PREFIXREGEX 
             {
               Object RESULT =null;
 		int leleft = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()).left;
@@ -509,7 +537,7 @@ class CUP$Syntactical$actions {
           return CUP$Syntactical$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 22: // PREFIXREGEX ::= leftCurlyB id rightCurlyB 
+          case 24: // PREFIXREGEX ::= leftCurlyB id rightCurlyB 
             {
               Object RESULT =null;
 		int oleft = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).left;
@@ -517,9 +545,9 @@ class CUP$Syntactical$actions {
 		String o = (String)((java_cup.runtime.Symbol) CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).value;
 		
                     System.out.println("nuevo id"); 
-                    AST newVal = new AST(parser.ids, o, null, null );
+                    
                     parser.ids++;
-                    RESULT = newVal;
+                    RESULT = new AST(parser.ids, o, null, null );
 
                 
               CUP$Syntactical$result = parser.getSymbolFactory().newSymbol("PREFIXREGEX",8, ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-2)), ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()), RESULT);
@@ -527,7 +555,7 @@ class CUP$Syntactical$actions {
           return CUP$Syntactical$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 23: // PREFIXREGEX ::= stringVal 
+          case 25: // PREFIXREGEX ::= stringVal 
             {
               Object RESULT =null;
 		int oleft = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()).left;
@@ -537,9 +565,9 @@ class CUP$Syntactical$actions {
                     String contenido = (String)o;
                     //String [] concat=contenido.split("\"");//eliminando las comillas de la cadena para que no de error al generar el png
                     System.out.println("nuevo string"); 
-                    AST newVal = new AST(parser.ids, contenido, null, null );
+                    
                     parser.ids++;
-                    RESULT = newVal;
+                    RESULT = new AST(parser.ids, contenido, null, null );
 
                 
               CUP$Syntactical$result = parser.getSymbolFactory().newSymbol("PREFIXREGEX",8, ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()), ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()), RESULT);
@@ -547,7 +575,26 @@ class CUP$Syntactical$actions {
           return CUP$Syntactical$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 24: // EVALUATION ::= id colon stringVal semicolon 
+          case 26: // PREFIXREGEX ::= specialChar 
+            {
+              Object RESULT =null;
+		int oleft = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()).left;
+		int oright = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()).right;
+		String o = (String)((java_cup.runtime.Symbol) CUP$Syntactical$stack.peek()).value;
+		  
+                    String contenido = (String)o;
+                    System.out.println("nuevo specialChar"); 
+                    
+                    parser.ids++;
+                    RESULT = new AST(parser.ids, contenido, null, null );
+
+                
+              CUP$Syntactical$result = parser.getSymbolFactory().newSymbol("PREFIXREGEX",8, ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()), ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()), RESULT);
+            }
+          return CUP$Syntactical$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 27: // EVALUATION ::= id colon stringVal semicolon 
             {
               Object RESULT =null;
 		 System.out.println("Nuevo lexema a evaluar"); 
@@ -556,7 +603,7 @@ class CUP$Syntactical$actions {
           return CUP$Syntactical$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 25: // LISTVAL ::= id comma LISTVAL 
+          case 28: // LISTVAL ::= id comma LISTVAL 
             {
               Object RESULT =null;
 
@@ -565,7 +612,7 @@ class CUP$Syntactical$actions {
           return CUP$Syntactical$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 26: // LISTVAL ::= id 
+          case 29: // LISTVAL ::= id 
             {
               Object RESULT =null;
 
@@ -574,7 +621,7 @@ class CUP$Syntactical$actions {
           return CUP$Syntactical$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 27: // ASCIIS ::= asciiChar comma ASCIIS 
+          case 30: // ASCIIS ::= asciiChar comma ASCIIS 
             {
               Object RESULT =null;
 
@@ -583,7 +630,7 @@ class CUP$Syntactical$actions {
           return CUP$Syntactical$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 28: // ASCIIS ::= asciiChar 
+          case 31: // ASCIIS ::= asciiChar 
             {
               Object RESULT =null;
 

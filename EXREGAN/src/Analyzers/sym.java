@@ -13,8 +13,9 @@ public class sym {
   public static final int comment = 2;
   public static final int multicomment = 3;
   public static final int arrow = 18;
+  public static final int specialChar = 20;
   public static final int separator = 11;
-  public static final int conj = 20;
+  public static final int conj = 21;
   public static final int operatorOneMore = 9;
   public static final int semicolon = 16;
   public static final int EOF = 0;
@@ -50,6 +51,7 @@ public class sym {
   "colon",
   "arrow",
   "asciiChar",
+  "specialChar",
   "conj"
   };
 }

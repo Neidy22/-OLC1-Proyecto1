@@ -55,7 +55,7 @@ terminal String comment, multicomment, stringVal, id;
 terminal String operatorAnd, operatorOr, operatorZeroMore, operatorOneMore, operatorZeroOne;
 
 //simbolos
-terminal String separator, comma, virgulilla, leftCurlyB, rightCurlyB, semicolon, colon, arrow, asciiChar;
+terminal String separator, comma, virgulilla, leftCurlyB, rightCurlyB, semicolon, colon, arrow, asciiChar, specialChar;
 
 //reservadas
 terminal String conj;
@@ -70,7 +70,10 @@ precedence left operatorAnd;
 //le indico  con cuál palabra reservada va a comenzar la gramática
 start with INICIO;
 
-INICIO ::= leftCurlyB PROGRAMBODY;
+INICIO ::= leftCurlyB PROGRAMBODY
+        |  comment INICIO
+        |  multicomment INICIO;
+
          
 
 PROGRAMBODY ::= comment PROGRAMBODY
@@ -150,9 +153,9 @@ PREFIXREGEX ::= operatorAnd PREFIXREGEX:ri PREFIXREGEX:le
               | leftCurlyB id:o rightCurlyB 
                 {:
                     System.out.println("nuevo id"); 
-                    AST newVal = new AST(parser.ids, o, null, null );
+                    
                     parser.ids++;
-                    RESULT = newVal;
+                    RESULT = new AST(parser.ids, o, null, null );
 
                 :}
               | stringVal:o
@@ -160,9 +163,18 @@ PREFIXREGEX ::= operatorAnd PREFIXREGEX:ri PREFIXREGEX:le
                     String contenido = (String)o;
                     //String [] concat=contenido.split("\"");//eliminando las comillas de la cadena para que no de error al generar el png
                     System.out.println("nuevo string"); 
-                    AST newVal = new AST(parser.ids, contenido, null, null );
+                    
                     parser.ids++;
-                    RESULT = newVal;
+                    RESULT = new AST(parser.ids, contenido, null, null );
+
+                :}
+              | specialChar:o
+                {:  
+                    String contenido = (String)o;
+                    System.out.println("nuevo specialChar"); 
+                    
+                    parser.ids++;
+                    RESULT = new AST(parser.ids, contenido, null, null );
 
                 :};
 

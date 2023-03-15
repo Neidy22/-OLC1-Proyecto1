@@ -30,8 +30,8 @@ endOfLineS = \r|\n|\r\n
 inputChar = [^\r\n]
 comment = "//" {inputChar}*{endOfLineS}?
 letters = [a-zA-Z]
-values = {letters} | {number} | {asciiChar} | {nextL} | {singleQuoMark} | {doubleQuoMark}
-stringVal = [\u0022]{values}*[\u0022]
+values = {letters} | {number} | {asciiChar} | {specialChar} | {blankSpace}
+stringVal = ([\u0022]{values}*[\u0022]) 
 idVal = {letters} | {number}
 id = {idVal}+
 
@@ -39,14 +39,16 @@ number = [0-9]
 
 comma = ","
 virgulilla = \u007E
-//           alt33 - alt47      alt58 - alt64    alt91 - alt96    alt123 - alt125
-asciiChar = [\u0021-\u002F] | [\u003A-\u0040] | [\u005B-\u0060] | [\u007B-\u007D]
+specialChar = [\u005C]"n"|[\u005C][\u0027]|[\u005C][\u0022]
+//           alt33      alt35 - alt47      alt58 - alt64    alt91 - alt96    alt123 - alt125
+asciiChar = [\u0021] | [\u0023-\u002F] | [\u003A-\u0040] | [\u005B-\u0060] | [\u007B-\u007D]
+blankSpace = [\u0020]
 
 leftCurlyB = \u007B
 rightCurlyB = \u007D
 semicolon = \u003B
 colon = \u003A
-arrow = ([\u002D][\u003E]) 
+arrow = ([\u002D]{blankSpace}*[\u003E]) 
 
 
 nextL = [\u005C]"n"
@@ -159,12 +161,15 @@ separator = [\u0025][\u0025]
                              return new Symbol(sym.arrow, yycolumn, yyline, yytext());  
                             }
 
-
+<YYINITIAL> {specialChar}   {System.out.println("Reconocio token <specialChar> lexema: "+ yytext()); 
+                             return new Symbol(sym.specialChar, yycolumn, yyline, yytext()); 
+                            }
 
 
 <YYINITIAL> {asciiChar}     {System.out.println("Reconocio token <asciiChar> lexema: "+ yytext()); 
                              return new Symbol(sym.asciiChar, yycolumn, yyline, yytext()); 
                             }
+
 
 
 
