@@ -28,6 +28,7 @@ public class AST {
     private int leafs;
     private ArrayList <Integer> firstPos = new ArrayList<Integer>();
     private ArrayList <Integer> lastPos = new ArrayList<Integer>();
+
     private AST leftSon;
     private AST rightSon;
     
@@ -186,7 +187,7 @@ public class AST {
                 actual.lastPos.addAll(actual.leftSon.lastPos);
                 
             }else if(actual.no > 0){ //es nodo hoja
-                //first pos = no de hoja
+                //last pos = no de hoja
                 actual.lastPos.add(actual.no);
             } 
 
@@ -194,6 +195,45 @@ public class AST {
         }
             
     }
+    
+    public void setNext(NextTable tbl, AST actual){
+        //recorrido post-orden
+        if(actual != null){
+            setNext(tbl, actual.leftSon);
+            setNext(tbl, actual.rightSon);
+            
+            if(actual.leftSon == null && actual.rightSon == null){ // es nodo hoja, lo añado a la tabla de next
+                Node nuevo = new Node(actual.no, actual.value);
+                tbl.addNode(nuevo);
+            }else if(actual.value == "."){
+                //Para cada elemento en lastPos del nodo left, agregar firstPos del nodo right
+                for(Integer last : actual.leftSon.lastPos){
+                    tbl.getNode(last-1).getNextPos().addAll(actual.rightSon.firstPos);  
+                }
+            
+            }else if(actual.value == "*"){
+                //Para cada elemento en lastPos del nodo left, agregar firstPos del nodo left
+                for(Integer last : actual.leftSon.lastPos){
+                    tbl.getNode(last-1).getNextPos().addAll(actual.leftSon.firstPos);  
+                }
+            
+            }else if(actual.value == "+"){
+                //Para cada elemento en lastPos del nodo left, agregar firstPos del nodo left
+                for(Integer last : actual.leftSon.lastPos){
+                    tbl.getNode(last-1).getNextPos().addAll(actual.leftSon.firstPos);  
+                }
+            
+            }
+        }
+    }
+    
+    public NextTable getNext(){
+        NextTable next = new NextTable(this.name);
+        setNext(next,this);
+        return next;
+    }
+    
+    
     
     
     public void combineListF(ArrayList listA, ArrayList listB, AST actual){
@@ -209,9 +249,6 @@ public class AST {
         actual.lastPos.addAll(setCombined);
         System.out.println(actual.lastPos);
     }
-    
-    
-    
     
     public void preorderGraph(AST actual, String [] nodes){
         if(actual != null){
@@ -311,6 +348,15 @@ public class AST {
         this.setFirst(this);
         this.setLast(this);
         this.graph();
+        //generación de tabla de nextPos
+        NextTable nueva =this.getNext();
+        nueva.graph();
+        EXREGAN.nextPos.add(nueva);
+        
+        TransitionTable newTransitions = new TransitionTable(this.name);
+        newTransitions.generateTable(nueva, this.firstPos);
+        newTransitions.graph();
+        
     }
     
 }

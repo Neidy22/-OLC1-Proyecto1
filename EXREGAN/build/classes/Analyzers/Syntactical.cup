@@ -70,9 +70,10 @@ precedence left operatorAnd;
 //le indico  con cuál palabra reservada va a comenzar la gramática
 start with INICIO;
 
-INICIO ::= leftCurlyB PROGRAMBODY
+INICIO ::= leftCurlyB PROGRAMBODY INICIO
         |  comment INICIO
         |  multicomment INICIO;
+        
 
          
 
