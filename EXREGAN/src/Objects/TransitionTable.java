@@ -56,24 +56,23 @@ public class TransitionTable {
             //recorrer la lista de nextpos para sacar cada transicion
             auxi = actual.getNextPos();
             for(Integer hoja: auxi){
+                System.out.println("Origen S"+actual.getNo() +" "+actual.getNextPos()+ "  Valor de transicion: "+tbl.getNode(hoja-1).getVal()+ " Destino: S"+searchState(states, tbl.getNode(hoja-1).getNextPos())+tbl.getNode(hoja-1).getNextPos());
+                Node newTransition = new Node(actual.getNo(), tbl.getNode(hoja-1).getVal());
+                newTransition.getNextPos().addAll(actual.getNextPos());
+                
                 if(tbl.getNode(hoja-1).getVal() != "#"){
-                    System.out.println("Origen S"+actual.getNo() +" "+actual.getNextPos()+ "  Valor de transicion: "+tbl.getNode(hoja-1).getVal()+ " Destino: S"+searchState(states, tbl.getNode(hoja-1).getNextPos())+tbl.getNode(hoja-1).getNextPos());
-                    Node newTransition = new Node(actual.getNo(), tbl.getNode(hoja-1).getVal());
-                    newTransition.getNextPos().addAll(actual.getNextPos());
                     newTransition.getNextPosFinal().addAll(tbl.getNode(hoja-1).getNextPos());
                     newTransition.setNoFinal(searchState(states, tbl.getNode(hoja-1).getNextPos()));
-                    this.transitions.add(newTransition);
+                    newTransition.setIsFinal(false);
+                }else{ 
+                    newTransition.setIsFinal(true);    
                 }
+                
+                this.transitions.add(newTransition);
+            
 
             }
         }
-        
-       
-        
-        
-
-        
- 
     }
     
     public boolean stateExists(LinkedList <Node> st, LinkedList<Integer> next){
@@ -172,7 +171,77 @@ public class TransitionTable {
             
     }
     
+    
+    public void graphAFD(){
+        String text="digraph AFD{\n";
+        text += "   fontname = \"Helvetica,Arial,sans-serif\"\n";
+        text += "   node [fontname=\"Helvetica,Arial,sans-serif\"]\n";
+        text += "   edge [fontname=\"Helvetica,Arial,sans-serif\"]\n";
+	text += "   rankdir=LR\n";
+	text += "   node [shape = doublecircle, color=\"#ee00ee80\", style = \"filled\", fontcolor =\"white\"];\n ";
+        //todos los nodos que son final o de aceptación
+        
+        String relas ="";
+        
+        
+        for(Node x : this.transitions){
+            if(x.isFinal()){
+                text += " S"+x.getNo();
+            }
+            if(x.getVal() != "#"){
+                relas += "    S"+ x.getNo()+ " -> S"+ x.getFinalNo() + "[label ="+x.getVal()+"];\n";
+            }
+            
+        }
+        text += ";\n";
+        
+        text += "   node [shape=circle style=invis]; S-1\n";
+        relas += "S-1 -> S0\n";
+        
+	text += "   node [shape = circle, color=\"#0000ff80\", style = \"filled\", fontcolor = \"white\"];\n";
+        text += relas;
+	
+        
+        text+="}\n";
+        
+       
+        //verifico si la carpeta de arboles existe
+        
+        File trees = new File("src\\Reports\\AFD_201801671");
+        if(!trees.exists()){ // if folder doesn't exists
+            try{
+                if(trees.mkdir()){ // create the folder
+                 
+                    System.out.println("Carpeta de AFD creada");
+                    //EXREGAN.menu.addFolder(EXREGAN.menu.getTrees());
+                    
+                }
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }else{
+            //the folder already exists
+           System.out.println("Carpeta de AFD ya existe");
+        }
+        
+        
+        //genero los archivos de salida
+        String dirsvg="src\\Reports\\AFD_201801671\\"+this.name+".png";
+        String dirDot="src\\Reports\\AFD_201801671\\"+this.name+".dot";
+        try{
+            
+            PrintWriter writer= new PrintWriter(dirDot,"UTF-8");
+            writer.print(text);
+            writer.close();
+            String cmd="C:\\Program Files\\Graphviz\\bin\\dot " + " -Tpng " + " -o " + " " + dirsvg + " " + dirDot;
+            Runtime rt=Runtime.getRuntime();
+            rt.exec(cmd);
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    
+    }
 
     
     

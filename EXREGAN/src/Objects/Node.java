@@ -14,6 +14,7 @@ public class Node {
     private int no;
     private int noFinal;
     private String value;
+    private boolean isFinal;
     private LinkedList <Integer> nextPos = new LinkedList <Integer>();
     private LinkedList <Integer> nextPosFinal = new LinkedList <Integer>();
     
@@ -42,6 +43,14 @@ public class Node {
     
     public void setNo(int n){
        this.no = n;
+    }
+    
+    public void setIsFinal(boolean b){
+        this.isFinal = b;
+    }
+    
+    public boolean isFinal(){
+        return this.isFinal;
     }
     
     public void addNext(int pos){

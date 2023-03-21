@@ -356,6 +356,7 @@ public class AST {
         TransitionTable newTransitions = new TransitionTable(this.name);
         newTransitions.generateTable(nueva, this.firstPos);
         newTransitions.graph();
+        newTransitions.graphAFD();
         
     }
     
