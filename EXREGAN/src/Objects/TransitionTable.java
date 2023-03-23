@@ -26,6 +26,60 @@ public class TransitionTable {
         
     }
     
+    public String getName(){
+        return this.name;
+    }
+    
+    public LinkedList<Node> getTransitions(){
+        return this.transitions;
+    }
+    
+    public String getTransitionValues(int state){
+        String vals= "";
+        for(Node x: this.transitions){ // recorrer las transiciones
+            if(x.getNo() == state){ //si el valor del estado en el que se encuentra es igual al stado evaluado
+                if(x.getVal()!= "#"){
+                    vals += x.getVal()+","; //agregar a la lista los valores de transición para ese estado
+                }
+
+            }
+        }
+        
+        return vals;
+    }
+    
+    public int getNextState(int actualState, String transitionVal){
+        int n = -1;
+        for(Node x : this.transitions){
+            if(x.getNo() == actualState && x.getVal().equals(transitionVal)){
+                n = x.getFinalNo();
+                break;
+            }
+        }
+        
+        return n;
+    
+    }
+    
+    public boolean isActualFinal(int actualState, String v){
+        boolean isF = false;
+        for(Node x : this.transitions){
+            //System.out.println("Estado actual" + x.getNo() + " estado analisis: "+actualState);
+            if(x.getNo() == actualState){
+                if(x.getVal().equals(v)){
+                    System.out.println("Estado actual: " + x.getNo() + " estado analisis: "+actualState+ " Es F: "+x.isFinal());
+                    isF = x.isFinal(); 
+                    break;
+                }
+               
+            }
+        }
+        
+        return isF;
+    
+    }
+
+ 
     public void generateTable(NextTable tbl, ArrayList<Integer> firstPos){
         LinkedList <Node> states = new LinkedList <Node>();
         int cont = 0;
@@ -51,29 +105,39 @@ public class TransitionTable {
         }
         
         LinkedList <Integer> auxi;
+        LinkedList <Integer> auxi2;
         //recorrer la lista de estados
         for(Node actual : states){
             //recorrer la lista de nextpos para sacar cada transicion
             auxi = actual.getNextPos();
             for(Integer hoja: auxi){
-                System.out.println("Origen S"+actual.getNo() +" "+actual.getNextPos()+ "  Valor de transicion: "+tbl.getNode(hoja-1).getVal()+ " Destino: S"+searchState(states, tbl.getNode(hoja-1).getNextPos())+tbl.getNode(hoja-1).getNextPos());
+    
+                //if(tbl.getNode(hoja-1).getVal() != "#"){
                 Node newTransition = new Node(actual.getNo(), tbl.getNode(hoja-1).getVal());
                 newTransition.getNextPos().addAll(actual.getNextPos());
                 
                 if(tbl.getNode(hoja-1).getVal() != "#"){
                     newTransition.getNextPosFinal().addAll(tbl.getNode(hoja-1).getNextPos());
                     newTransition.setNoFinal(searchState(states, tbl.getNode(hoja-1).getNextPos()));
-                    newTransition.setIsFinal(false);
-                }else{ 
-                    newTransition.setIsFinal(true);    
                 }
-                
+
+                //para determinar si es un estado de aceptación
+                auxi2 = newTransition.getNextPos();
+                for(Integer x : auxi2){
+                    if(tbl.getNode(x-1).getVal() == "#"){
+                        newTransition.setIsFinal(true);
+                    }
+                }
+                    
                 this.transitions.add(newTransition);
+
+                System.out.println("Origen S"+actual.getNo() +" "+actual.getNextPos()+ "  Valor de transicion: "+tbl.getNode(hoja-1).getVal()+ " Destino: S"+searchState(states, tbl.getNode(hoja-1).getNextPos())+tbl.getNode(hoja-1).getNextPos());
             
 
             }
         }
     }
+    
     
     public boolean stateExists(LinkedList <Node> st, LinkedList<Integer> next){
         boolean exist = false;
@@ -243,11 +307,6 @@ public class TransitionTable {
     
     }
 
-    
-    
-    
-    
-    
 
     
 }

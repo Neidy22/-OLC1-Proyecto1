@@ -197,10 +197,12 @@ public class AST {
     }
     
     public void setNext(NextTable tbl, AST actual){
-        //recorrido post-orden
+        //recorrido pos-orden
         if(actual != null){
             setNext(tbl, actual.leftSon);
             setNext(tbl, actual.rightSon);
+            
+            
             
             if(actual.leftSon == null && actual.rightSon == null){ // es nodo hoja, lo añado a la tabla de next
                 Node nuevo = new Node(actual.no, actual.value);
@@ -224,6 +226,8 @@ public class AST {
                 }
             
             }
+            
+            
         }
     }
     
@@ -357,6 +361,7 @@ public class AST {
         newTransitions.generateTable(nueva, this.firstPos);
         newTransitions.graph();
         newTransitions.graphAFD();
+        EXREGAN.afds.add(newTransitions);
         
     }
     

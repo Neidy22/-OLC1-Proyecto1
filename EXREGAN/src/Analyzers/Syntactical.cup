@@ -11,6 +11,7 @@ parser code
     //metodos para controlar el arbol de expresiones
     public static int ids = 0;
     public static AST rootT;
+    public static String notacion ="";
 
     //metodo al que se llama automaticamente ante algun error sintactico
     public void syntax_error(Symbol s)
@@ -65,7 +66,7 @@ non terminal INICIO, PROGRAMBODY, DEFINITION, EVALUATION, CONJUNTO, EXPRG, NOTAT
 
 //PRECEDENCIAS
 precedence left operatorOr;
-precedence left operatorAnd; 
+precedence left operatorAnd;
 
 //le indico  con cuál palabra reservada va a comenzar la gramática
 start with INICIO;
@@ -90,10 +91,25 @@ DEFINITION ::= CONJUNTO
              | separator separator;
 
 
-CONJUNTO ::= conj colon id arrow NOTATION semicolon {: System.out.println("Nuevo conjunto"); :};
+CONJUNTO ::= conj colon id:i arrow NOTATION:n semicolon 
+            {: 
+               
+               System.out.println("Nuevo conjunto" + parser.notacion); 
+               Conjunto newConj = new Conjunto((String)i, parser.notacion);
+               EXREGAN.conjuntos.add(newConj);
+               parser.notacion = "";
+            :};
 
-NOTATION ::= id virgulilla id
-           | asciiChar virgulilla asciiChar
+NOTATION ::= id:i1 virgulilla:i2 id:i3
+            {: parser.notacion += i1;
+               parser.notacion += i2;
+               parser.notacion += i3;
+            :}
+           | asciiChar:i1 virgulilla:i2 asciiChar:i3
+            {: parser.notacion += i1;
+               parser.notacion += i2;
+               parser.notacion += i3;
+            :}
            | LISTVAL
            | ASCIIS;
 
@@ -108,19 +124,19 @@ EXPRG ::= id:n arrow  PREFIXREGEX:r semicolon
             parser.rootT = newR;
             parser.rootT.generateAST((String) n);
             EXREGAN.trees.add((AST)r);
-            EXREGAN.menu.addTree((String)n, EXREGAN.menu.getTrees());
+            //EXREGAN.menu.addTree((String)n, EXREGAN.menu.getTrees());
             System.out.println("Nueva expresión regular"); 
           :};
 
 
-PREFIXREGEX ::= operatorAnd PREFIXREGEX:ri PREFIXREGEX:le
+PREFIXREGEX ::= operatorAnd PREFIXREGEX:le PREFIXREGEX:ri
                 {:
                     System.out.println("nuevo . P");
                     parser.ids++;
                     RESULT = new AST(parser.ids, ".", (AST)le, (AST)ri); 
                 :}
 
-              | operatorOr PREFIXREGEX:ri  PREFIXREGEX:le
+              | operatorOr PREFIXREGEX:le  PREFIXREGEX:ri
                 {:
                     System.out.println("nuevo | P");
                     parser.ids++;
@@ -141,6 +157,8 @@ PREFIXREGEX ::= operatorAnd PREFIXREGEX:ri PREFIXREGEX:le
                     System.out.println("nuevo + P");
                     parser.ids++;
                     RESULT = new AST(parser.ids, "+", (AST)le, null); 
+                    
+                    
 
                 :}
 
@@ -186,15 +204,35 @@ PREFIXREGEX ::= operatorAnd PREFIXREGEX:ri PREFIXREGEX:le
 
 
 //lexemas a evaluar
-EVALUATION ::= id colon stringVal semicolon {: System.out.println("Nuevo lexema a evaluar"); :};
+EVALUATION ::= id:i colon stringVal:v semicolon 
+             {: System.out.println("Nuevo lexema a evaluar"); 
+                Evaluation newEval = new Evaluation((String)i, (String)v);
+                newEval.setNameF(mainMenu.nameActualF);
+                EXREGAN.evaluations.add(newEval);
+
+             :};
 
 
 //listas
-LISTVAL ::= id comma LISTVAL
-          | id;
+LISTVAL ::= id:i1 comma:i2 LISTVAL
+            {:
+                parser.notacion += i1;
+                parser.notacion += i2;
+            :}
+          | id:i1
+            {:
+                parser.notacion += i1;
+            :};
 
-ASCIIS ::= asciiChar comma ASCIIS
-         | asciiChar;
+ASCIIS ::= asciiChar:i1 comma:i2 ASCIIS
+            {:
+                parser.notacion += i1;
+                parser.notacion += i2;
+            :}
+         | asciiChar:i1
+            {:
+                parser.notacion += i1;
+            :};
 
 
 

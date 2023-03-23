@@ -6,7 +6,11 @@ package ui;
 
 import Analyzers.Analyzer;
 import Main.EXREGAN;
+import Objects.Conjunto;
+import Objects.Evaluation;
+import Objects.Node;
 import Objects.TError;
+import Objects.TransitionTable;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,6 +20,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringReader;
+import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -30,6 +35,8 @@ import javax.swing.tree.DefaultTreeModel;
  * @author neidy
  */
 public class mainMenu extends javax.swing.JFrame {
+
+    
     
     
     //global variables
@@ -37,6 +44,7 @@ public class mainMenu extends javax.swing.JFrame {
     FileInputStream inF;
     FileOutputStream outF;
     String nameF;
+    public static String nameActualF;
     int contador;
     
     private DefaultTreeModel reports;
@@ -79,7 +87,7 @@ public class mainMenu extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jtxtConsole = new javax.swing.JTextField();
+        txtConsole = new javax.swing.JTextField();
         jtpGraph = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -118,7 +126,7 @@ public class mainMenu extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(53, 19, 92));
 
-        jScrollPane1.setViewportView(jtxtConsole);
+        jScrollPane1.setViewportView(txtConsole);
 
         jPanel3.setBackground(new java.awt.Color(166, 117, 255));
 
@@ -385,6 +393,8 @@ public class mainMenu extends javax.swing.JFrame {
 
     private void btnAnalyzeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnalyzeActionPerformed
         // TODO add your handling code here:
+        this.txtConsole.setText("");
+        analyzeInput();
     }//GEN-LAST:event_btnAnalyzeActionPerformed
 
     private void jMOpenFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMOpenFileActionPerformed
@@ -445,6 +455,8 @@ public class mainMenu extends javax.swing.JFrame {
       
     }//GEN-LAST:event_reportsTAncestorAdded
 
+   
+    
     public void setArea(File f){
         String text = "";
         
@@ -455,6 +467,7 @@ public class mainMenu extends javax.swing.JFrame {
                 char letter = (char)value;
                 text += letter;
             }
+            nameActualF = f.getName();
         }catch(Exception e){
             
         }
@@ -655,8 +668,211 @@ public class mainMenu extends javax.swing.JFrame {
        return this.trees;         
     }
 
+    public void analyzeInput(){
+        
+        TransitionTable afd;
+        int state = 0, lastState = -1, successful = 0;
+        String values[], response = "", lastVal="", outResponse = "";
+        LinkedList <String> chars = new LinkedList<String>();
+        char c;
+        Conjunto conj;
+        boolean isValid = false;
+       
+        
+        
+        if(EXREGAN.afds.size() > 0){//verificar si existen afd generados
+            
+            for(Evaluation e : EXREGAN.evaluations){//recorrer cada elemento de la lista de evaluaciones
+                if(e.getNameF().equals(nameActualF)){
+                    afd = getAfd(e.getId()); //obtener el afd de acuerdo al id 
+                    if(afd != null){
+                        System.out.println("Lexema: "+ e.getLexem());
+                        state = 0;
 
+                        for(int i = 1 ; i < e.getLexem().length()-1; i++){//recorrer el string del lexema de la ultima posición a la primera
+                            c = e.getLexem().charAt(i);
+
+                            values = afd.getTransitionValues(state).split(","); //obtener los valores de la transición del afd 
+                            chars = charsForState(values);
+
+
+                            isValid = false;
+
+                            for(int j = 0; j < chars.size()-1; j += 2){
+
+                                if(Character.compare(c, chars.get(j+1).charAt(0)) == 0){
+                                    System.out.println("Tipo: "+ chars.get(j)+ " char: "+chars.get(j+1));
+                                    state = afd.getNextState(state, chars.get(j));
+                                    lastVal = chars.get(j);
+                                    isValid = true;
+                                    break;
+                                }
+                            }
+
+                            if(isValid == false){
+                                state = -1;
+                                break; 
+                            }
+
+                        }
+
+                        if(state >= 0){
+                            if(afd.isActualFinal(state, lastVal)){
+                                response += "La expresión: " + e.getLexem() + " es válida con la regex: "+ e.getId()+"\n\r  ";
+                                e.setIsValid(true);
+                                successful++;
+                                this.txtConsole.setText(response);
+
+                            }else{
+                                response += "La expresión: " + e.getLexem() + " no es válida con la regex: "+ e.getId()+"\n\r";
+                                this.txtConsole.setText(response);
+                            }
+                        }else{
+                            response += "La expresión: " + e.getLexem() + " no es válida con la regex: "+ e.getId()+"";
+                            this.txtConsole.setText(response);
+                        }
+
+
+
+
+
+
+                    }else{//si no existe notificar que no es un id valido para un afd
+                        JOptionPane.showMessageDialog(this, "No se encontró el AFD para la evaluación");
+                    }
+                
+                }
+
+            }
+            generateJson(nameActualF, successful);
+            
+                       
+        }else{//si no, solicitar la generación de nuevos afd
+           JOptionPane.showMessageDialog(this, "No hay autómatas generados!!!");
+        }
+           
     
+    }
+    
+    
+    public TransitionTable getAfd(String i){
+        TransitionTable afd = null;
+        //System.out.println("Buscando: "+i);
+        for(TransitionTable t : EXREGAN.afds){
+            //System.out.println("Actual: "+ t.getName());
+            if(t.getName().equalsIgnoreCase(i)){
+                afd = t;
+                break;
+            }
+        }
+        return afd;
+    }
+    
+    public Conjunto getConjunto(String nameC){
+        Conjunto con = null;
+        for(Conjunto c: EXREGAN.conjuntos){
+            if(c.getId().equals(nameC)){
+                con = c;
+                break;
+            }
+        }
+        return con;
+    }
+    
+    public LinkedList<String> charsForState(String [] values){
+        
+        LinkedList <String> chars = new LinkedList <String>(); //lista auxiliar en la que ingresaré todos los carácteres que pueden venir
+        Conjunto conj = null;
+        for(String v : values){ // recorro los valores de las transiciones validas para el estado en el que estoy y agregar los posibles char 
+            
+            if(v.charAt(0) == '"'){ // si el posible valor es una cadena
+                
+                for(int i = 1; i < v.length()-1; i++){
+                    chars.add(v);
+                    chars.add(String.valueOf(v.charAt(i)));       //añado todo lo que venga dentro de la cadena para reconocerlo en los caracteres de entrada
+                }
+                
+                
+            }else if(v == "\n"){ // si el posible valor es un salto de linea
+                chars.add(v);
+                chars.add("\n");
+                System.out.println("Actual values: "+v);
+               
+
+            }else if(v == "\""){ // si el posible valor es comilla doble
+                chars.add(v);
+                chars.add("\"");
+                System.out.println("Actual values: "+v);
+
+            }else if(v == "\'"){ // si el posible valor es comilla simple
+                chars.add(v);
+                chars.add("\'");
+                System.out.println("Actual values: "+v);
+            }else{ // el posible valor es un conjunto
+                conj =  getConjunto(v);
+                if(conj != null){
+                   
+                   chars.addAll(conj.getValuesInRange()); // añado el listado de valores definidos dentro del conjunto
+                               
+                }else{
+                    JOptionPane.showMessageDialog(this, "No se encontró ningún conjunto con id"+v);
+                }
+            }
+        }
+        
+        return chars;
+    }
+    
+    public void generateJson(String name, int cant){
+        int cont = 0;
+        String content = "";
+        content += "[ \n";
+        
+        for(Evaluation e: EXREGAN.evaluations){
+            if(e.getIsValid() && e.getNameF().equals(nameActualF)){
+                content += "    {\n";
+                content += e.generateResultJson();
+                if(cont < cant){
+                    content += "    }, \n";
+                }else{
+                    content += "    } \n";
+                }
+            }
+            cont++;
+        }
+        
+        content += "]\n";
+        
+        //verifico si la carpeta de arboles existe
+        
+        File trees = new File("src\\Reports\\SALIDAS_201801671");
+        if(!trees.exists()){ // if folder doesn't exists
+            try{
+                if(trees.mkdir()){ // create the folder
+                 
+                    System.out.println("Carpeta de SALIDAS creada");
+                    //EXREGAN.menu.addFolder(EXREGAN.menu.getTrees());
+                    
+                }
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }else{
+            //the folder already exists
+           System.out.println("Carpeta de SALIDAS ya existe");
+        }
+        
+        
+        
+        //genero los archivos de salida
+        
+        File newJson = new File("src\\Reports\\SALIDAS_201801671\\"+name+".json");
+        createFile(newJson,content);
+
+    }
+    
+    
+ 
     
     /**
      * @param args the command line arguments
@@ -723,9 +939,9 @@ public class mainMenu extends javax.swing.JFrame {
     private javax.swing.JMenu jmFile;
     private javax.swing.JMenu jmView;
     private javax.swing.JTabbedPane jtpGraph;
-    private javax.swing.JTextField jtxtConsole;
     private javax.swing.JTree reportsT;
     private javax.swing.JScrollPane scrollTree;
+    private javax.swing.JTextField txtConsole;
     private javax.swing.JTextArea txtFile;
     // End of variables declaration//GEN-END:variables
 }

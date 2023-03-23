@@ -196,6 +196,7 @@ public class Syntactical extends java_cup.runtime.lr_parser {
     //metodos para controlar el arbol de expresiones
     public static int ids = 0;
     public static AST rootT;
+    public static String notacion ="";
 
     //metodo al que se llama automaticamente ante algun error sintactico
     public void syntax_error(Symbol s)
@@ -381,7 +382,19 @@ class CUP$Syntactical$actions {
           case 13: // CONJUNTO ::= conj colon id arrow NOTATION semicolon 
             {
               Object RESULT =null;
-		 System.out.println("Nuevo conjunto"); 
+		int ileft = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-3)).left;
+		int iright = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-3)).right;
+		String i = (String)((java_cup.runtime.Symbol) CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-3)).value;
+		int nleft = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).left;
+		int nright = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).right;
+		Object n = (Object)((java_cup.runtime.Symbol) CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).value;
+		 
+               
+               System.out.println("Nuevo conjunto" + parser.notacion); 
+               Conjunto newConj = new Conjunto((String)i, parser.notacion);
+               EXREGAN.conjuntos.add(newConj);
+               parser.notacion = "";
+            
               CUP$Syntactical$result = parser.getSymbolFactory().newSymbol("CONJUNTO",4, ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-5)), ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()), RESULT);
             }
           return CUP$Syntactical$result;
@@ -390,7 +403,19 @@ class CUP$Syntactical$actions {
           case 14: // NOTATION ::= id virgulilla id 
             {
               Object RESULT =null;
-
+		int i1left = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-2)).left;
+		int i1right = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-2)).right;
+		String i1 = (String)((java_cup.runtime.Symbol) CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-2)).value;
+		int i2left = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).left;
+		int i2right = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).right;
+		String i2 = (String)((java_cup.runtime.Symbol) CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).value;
+		int i3left = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()).left;
+		int i3right = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()).right;
+		String i3 = (String)((java_cup.runtime.Symbol) CUP$Syntactical$stack.peek()).value;
+		 parser.notacion += i1;
+               parser.notacion += i2;
+               parser.notacion += i3;
+            
               CUP$Syntactical$result = parser.getSymbolFactory().newSymbol("NOTATION",6, ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-2)), ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()), RESULT);
             }
           return CUP$Syntactical$result;
@@ -399,7 +424,19 @@ class CUP$Syntactical$actions {
           case 15: // NOTATION ::= asciiChar virgulilla asciiChar 
             {
               Object RESULT =null;
-
+		int i1left = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-2)).left;
+		int i1right = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-2)).right;
+		String i1 = (String)((java_cup.runtime.Symbol) CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-2)).value;
+		int i2left = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).left;
+		int i2right = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).right;
+		String i2 = (String)((java_cup.runtime.Symbol) CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).value;
+		int i3left = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()).left;
+		int i3right = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()).right;
+		String i3 = (String)((java_cup.runtime.Symbol) CUP$Syntactical$stack.peek()).value;
+		 parser.notacion += i1;
+               parser.notacion += i2;
+               parser.notacion += i3;
+            
               CUP$Syntactical$result = parser.getSymbolFactory().newSymbol("NOTATION",6, ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-2)), ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()), RESULT);
             }
           return CUP$Syntactical$result;
@@ -441,7 +478,7 @@ class CUP$Syntactical$actions {
             parser.rootT = newR;
             parser.rootT.generateAST((String) n);
             EXREGAN.trees.add((AST)r);
-            EXREGAN.menu.addTree((String)n, EXREGAN.menu.getTrees());
+            //EXREGAN.menu.addTree((String)n, EXREGAN.menu.getTrees());
             System.out.println("Nueva expresión regular"); 
           
               CUP$Syntactical$result = parser.getSymbolFactory().newSymbol("EXPRG",5, ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-3)), ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()), RESULT);
@@ -452,12 +489,12 @@ class CUP$Syntactical$actions {
           case 19: // PREFIXREGEX ::= operatorAnd PREFIXREGEX PREFIXREGEX 
             {
               Object RESULT =null;
-		int rileft = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).left;
-		int riright = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).right;
-		Object ri = (Object)((java_cup.runtime.Symbol) CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).value;
-		int leleft = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()).left;
-		int leright = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()).right;
-		Object le = (Object)((java_cup.runtime.Symbol) CUP$Syntactical$stack.peek()).value;
+		int leleft = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).left;
+		int leright = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).right;
+		Object le = (Object)((java_cup.runtime.Symbol) CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).value;
+		int rileft = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()).left;
+		int riright = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()).right;
+		Object ri = (Object)((java_cup.runtime.Symbol) CUP$Syntactical$stack.peek()).value;
 		
                     System.out.println("nuevo . P");
                     parser.ids++;
@@ -471,12 +508,12 @@ class CUP$Syntactical$actions {
           case 20: // PREFIXREGEX ::= operatorOr PREFIXREGEX PREFIXREGEX 
             {
               Object RESULT =null;
-		int rileft = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).left;
-		int riright = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).right;
-		Object ri = (Object)((java_cup.runtime.Symbol) CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).value;
-		int leleft = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()).left;
-		int leright = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()).right;
-		Object le = (Object)((java_cup.runtime.Symbol) CUP$Syntactical$stack.peek()).value;
+		int leleft = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).left;
+		int leright = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).right;
+		Object le = (Object)((java_cup.runtime.Symbol) CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).value;
+		int rileft = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()).left;
+		int riright = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()).right;
+		Object ri = (Object)((java_cup.runtime.Symbol) CUP$Syntactical$stack.peek()).value;
 		
                     System.out.println("nuevo | P");
                     parser.ids++;
@@ -515,6 +552,8 @@ class CUP$Syntactical$actions {
                     System.out.println("nuevo + P");
                     parser.ids++;
                     RESULT = new AST(parser.ids, "+", (AST)le, null); 
+                    
+                    
 
                 
               CUP$Syntactical$result = parser.getSymbolFactory().newSymbol("PREFIXREGEX",8, ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)), ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()), RESULT);
@@ -599,7 +638,18 @@ class CUP$Syntactical$actions {
           case 27: // EVALUATION ::= id colon stringVal semicolon 
             {
               Object RESULT =null;
+		int ileft = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-3)).left;
+		int iright = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-3)).right;
+		String i = (String)((java_cup.runtime.Symbol) CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-3)).value;
+		int vleft = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).left;
+		int vright = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).right;
+		String v = (String)((java_cup.runtime.Symbol) CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).value;
 		 System.out.println("Nuevo lexema a evaluar"); 
+                Evaluation newEval = new Evaluation((String)i, (String)v);
+                newEval.setNameF(mainMenu.nameActualF);
+                EXREGAN.evaluations.add(newEval);
+
+             
               CUP$Syntactical$result = parser.getSymbolFactory().newSymbol("EVALUATION",3, ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-3)), ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()), RESULT);
             }
           return CUP$Syntactical$result;
@@ -608,7 +658,16 @@ class CUP$Syntactical$actions {
           case 28: // LISTVAL ::= id comma LISTVAL 
             {
               Object RESULT =null;
-
+		int i1left = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-2)).left;
+		int i1right = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-2)).right;
+		String i1 = (String)((java_cup.runtime.Symbol) CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-2)).value;
+		int i2left = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).left;
+		int i2right = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).right;
+		String i2 = (String)((java_cup.runtime.Symbol) CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).value;
+		
+                parser.notacion += i1;
+                parser.notacion += i2;
+            
               CUP$Syntactical$result = parser.getSymbolFactory().newSymbol("LISTVAL",7, ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-2)), ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()), RESULT);
             }
           return CUP$Syntactical$result;
@@ -617,7 +676,12 @@ class CUP$Syntactical$actions {
           case 29: // LISTVAL ::= id 
             {
               Object RESULT =null;
-
+		int i1left = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()).left;
+		int i1right = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()).right;
+		String i1 = (String)((java_cup.runtime.Symbol) CUP$Syntactical$stack.peek()).value;
+		
+                parser.notacion += i1;
+            
               CUP$Syntactical$result = parser.getSymbolFactory().newSymbol("LISTVAL",7, ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()), ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()), RESULT);
             }
           return CUP$Syntactical$result;
@@ -626,7 +690,16 @@ class CUP$Syntactical$actions {
           case 30: // ASCIIS ::= asciiChar comma ASCIIS 
             {
               Object RESULT =null;
-
+		int i1left = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-2)).left;
+		int i1right = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-2)).right;
+		String i1 = (String)((java_cup.runtime.Symbol) CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-2)).value;
+		int i2left = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).left;
+		int i2right = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).right;
+		String i2 = (String)((java_cup.runtime.Symbol) CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-1)).value;
+		
+                parser.notacion += i1;
+                parser.notacion += i2;
+            
               CUP$Syntactical$result = parser.getSymbolFactory().newSymbol("ASCIIS",9, ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-2)), ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()), RESULT);
             }
           return CUP$Syntactical$result;
@@ -635,7 +708,12 @@ class CUP$Syntactical$actions {
           case 31: // ASCIIS ::= asciiChar 
             {
               Object RESULT =null;
-
+		int i1left = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()).left;
+		int i1right = ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()).right;
+		String i1 = (String)((java_cup.runtime.Symbol) CUP$Syntactical$stack.peek()).value;
+		
+                parser.notacion += i1;
+            
               CUP$Syntactical$result = parser.getSymbolFactory().newSymbol("ASCIIS",9, ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()), ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()), RESULT);
             }
           return CUP$Syntactical$result;
