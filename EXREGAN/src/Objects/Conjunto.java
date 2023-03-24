@@ -49,6 +49,7 @@ public class Conjunto {
     public LinkedList<String> getValuesInRange(){
         LinkedList<String> values = new LinkedList<String>();
         if(this.notation.charAt(1)==','){ //es una lista
+            //System.out.println("Es lista de valores");
             String elements []= this.notation.split(","); // obtengo la lista de elementos que se esperan
             for(String e : elements){
                 values.add(this.id);
@@ -56,6 +57,7 @@ public class Conjunto {
             }
         
         }else if(this.notation.charAt(1) == '~'){//son dos valores min, y maximo del rango
+            //System.out.println("Es rango");
             char c = this.notation.charAt(0);
             while(c <= this.notation.charAt(2)){
                 values.add(this.id);

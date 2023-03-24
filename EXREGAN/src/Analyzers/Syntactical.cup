@@ -222,6 +222,7 @@ LISTVAL ::= id:i1 comma:i2 LISTVAL
           | id:i1
             {:
                 parser.notacion += i1;
+                parser.notacion += ",";
             :};
 
 ASCIIS ::= asciiChar:i1 comma:i2 ASCIIS
@@ -232,6 +233,7 @@ ASCIIS ::= asciiChar:i1 comma:i2 ASCIIS
          | asciiChar:i1
             {:
                 parser.notacion += i1;
+                parser.notacion += ",";
             :};
 
 

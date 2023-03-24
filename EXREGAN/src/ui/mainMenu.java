@@ -71,6 +71,7 @@ public class mainMenu extends javax.swing.JFrame {
         reports = new DefaultTreeModel(root);
         reportsT.setModel(reports);
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
         
     }
 
@@ -677,8 +678,7 @@ public class mainMenu extends javax.swing.JFrame {
         char c;
         Conjunto conj;
         boolean isValid = false;
-       
-        
+        char simpleQuoe = 39, doubleQuo = 34, bar = 92;
         
         if(EXREGAN.afds.size() > 0){//verificar si existen afd generados
             
@@ -688,25 +688,48 @@ public class mainMenu extends javax.swing.JFrame {
                     if(afd != null){
                         System.out.println("Lexema: "+ e.getLexem());
                         state = 0;
-
+                        System.out.println("Valor inicial: "+ e.getLexem().charAt(0));
+                        System.out.println("Valor Penultimo: "+ e.getLexem().charAt(e.getLexem().length()-2));
+                        System.out.println("Valor Final: "+ e.getLexem().charAt(e.getLexem().length()-1));
+                        System.out.println("Tamaño del lexema"+ (e.getLexem().length()-1));
+                        
                         for(int i = 1 ; i < e.getLexem().length()-1; i++){//recorrer el string del lexema de la ultima posición a la primera
                             c = e.getLexem().charAt(i);
 
                             values = afd.getTransitionValues(state).split(","); //obtener los valores de la transición del afd 
                             chars = charsForState(values);
-
-
+                            System.out.println("Viene char:  "+ c);
                             isValid = false;
 
                             for(int j = 0; j < chars.size()-1; j += 2){
-
-                                if(Character.compare(c, chars.get(j+1).charAt(0)) == 0){
-                                    System.out.println("Tipo: "+ chars.get(j)+ " char: "+chars.get(j+1));
-                                    state = afd.getNextState(state, chars.get(j));
-                                    lastVal = chars.get(j);
-                                    isValid = true;
-                                    break;
+                                if(Character.compare(chars.get(j).charAt(0), bar) != 0){ // si el posible valor es diferente a un special char
+                                    if(Character.compare(c, chars.get(j+1).charAt(0)) == 0){ // comparar si lo que tengo en la cadena del lexema es igual al caracter posible
+                                        System.out.println("Tipo: "+ chars.get(j)+ " char: "+chars.get(j+1) + " Estado: "+ state);
+                                        state = afd.getNextState(state, chars.get(j));
+                                        lastVal = chars.get(j);
+                                        isValid = true;
+                                        break;
+                                    }
                                 }
+                                else{ // el valor posible es un caracter especial
+                                    
+                                    if(Character.compare(c, chars.get(j+1).charAt(0)) == 0){ // si el char actual es una barra invertida
+                                        System.out.println("Es barra");
+                                        System.out.println("i es : "+i);
+                                        
+                                        System.out.println("Char en i: "+e.getLexem().charAt(i)+ "  Char en j: "+chars.get(j+1).charAt(1));
+                                        if(Character.compare(e.getLexem().charAt(i+1), chars.get(j+1).charAt(1)) == 0){//si el char siguiente en el lexema evaluado coincide con el otro elemento del char especial
+                                            state = afd.getNextState(state, chars.get(j));
+                                            lastVal = chars.get(j);
+                                            isValid = true;
+                                            System.out.println("Tipo: "+ chars.get(j)+ " char: "+chars.get(j+1)+" Estado:"+state);
+                                            i++;
+                                            break;
+                                        }
+                                    }
+                                    
+                                }
+                                    
                             }
 
                             if(isValid == false){
@@ -718,24 +741,19 @@ public class mainMenu extends javax.swing.JFrame {
 
                         if(state >= 0){
                             if(afd.isActualFinal(state, lastVal)){
-                                response += "La expresión: " + e.getLexem() + " es válida con la regex: "+ e.getId()+"\n\r  ";
+                                response += "La expresión: " + e.getLexem() + " es válida con la regex: "+ e.getId()+" \n\r  ";
                                 e.setIsValid(true);
                                 successful++;
                                 this.txtConsole.setText(response);
 
                             }else{
-                                response += "La expresión: " + e.getLexem() + " no es válida con la regex: "+ e.getId()+"\n\r";
+                                response += "La expresión: " + e.getLexem() + " no es válida con la regex: "+ e.getId()+" \n\r  ";
                                 this.txtConsole.setText(response);
                             }
                         }else{
-                            response += "La expresión: " + e.getLexem() + " no es válida con la regex: "+ e.getId()+"";
+                            response += "La expresión: " + e.getLexem() + " no es válida con la regex: "+ e.getId()+bar+" \n\r  ";
                             this.txtConsole.setText(response);
                         }
-
-
-
-
-
 
                     }else{//si no existe notificar que no es un id valido para un afd
                         JOptionPane.showMessageDialog(this, "No se encontró el AFD para la evaluación");
@@ -783,8 +801,10 @@ public class mainMenu extends javax.swing.JFrame {
         
         LinkedList <String> chars = new LinkedList <String>(); //lista auxiliar en la que ingresaré todos los carácteres que pueden venir
         Conjunto conj = null;
+        char simpleQuo = 39, doubleQuo = 34, bar = 92, salto = 110;
+        
         for(String v : values){ // recorro los valores de las transiciones validas para el estado en el que estoy y agregar los posibles char 
-            
+            //System.out.println("Valor : "+v);
             if(v.charAt(0) == '"'){ // si el posible valor es una cadena
                 
                 for(int i = 1; i < v.length()-1; i++){
@@ -792,26 +812,27 @@ public class mainMenu extends javax.swing.JFrame {
                     chars.add(String.valueOf(v.charAt(i)));       //añado todo lo que venga dentro de la cadena para reconocerlo en los caracteres de entrada
                 }
                 
+            }else if(v.charAt(0) == '\\' && v.charAt(1) == salto){ // si el posible valor es un salto de linea
+                chars.add(v);
                 
-            }else if(v == "\n"){ // si el posible valor es un salto de linea
+                chars.add(String.valueOf(bar) + String.valueOf(salto));
+                System.out.println("Es un salto");
+
+            }else if(v.charAt(0) == '\\' && v.charAt(1) == doubleQuo){ // si el posible valor es comilla doble
                 chars.add(v);
-                chars.add("\n");
-                System.out.println("Actual values: "+v);
+                chars.add(String.valueOf(bar) + String.valueOf(doubleQuo));
+                System.out.println("Es doble comilla");
+   
+            }else if(v.charAt(0) == '\\' && v.charAt(1) == simpleQuo){ // si el posible valor es comilla simple
+                chars.add(v);
+                chars.add(String.valueOf(bar) + String.valueOf(simpleQuo));
+                System.out.println("Es comilla Simple");
+                
                
-
-            }else if(v == "\""){ // si el posible valor es comilla doble
-                chars.add(v);
-                chars.add("\"");
-                System.out.println("Actual values: "+v);
-
-            }else if(v == "\'"){ // si el posible valor es comilla simple
-                chars.add(v);
-                chars.add("\'");
-                System.out.println("Actual values: "+v);
             }else{ // el posible valor es un conjunto
                 conj =  getConjunto(v);
                 if(conj != null){
-                   
+                   //System.out.println("obteniendo conjunto : "+v);
                    chars.addAll(conj.getValuesInRange()); // añado el listado de valores definidos dentro del conjunto
                                
                 }else{
@@ -824,7 +845,7 @@ public class mainMenu extends javax.swing.JFrame {
     }
     
     public void generateJson(String name, int cant){
-        int cont = 0;
+        int cont = 1;
         String content = "";
         content += "[ \n";
         

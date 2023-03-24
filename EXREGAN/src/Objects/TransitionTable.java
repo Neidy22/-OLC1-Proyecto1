@@ -38,7 +38,7 @@ public class TransitionTable {
         String vals= "";
         for(Node x: this.transitions){ // recorrer las transiciones
             if(x.getNo() == state){ //si el valor del estado en el que se encuentra es igual al stado evaluado
-                if(x.getVal()!= "#"){
+                if(x.getVal() != "#"){
                     vals += x.getVal()+","; //agregar a la lista los valores de transición para ese estado
                 }
 
@@ -66,12 +66,11 @@ public class TransitionTable {
         for(Node x : this.transitions){
             //System.out.println("Estado actual" + x.getNo() + " estado analisis: "+actualState);
             if(x.getNo() == actualState){
-                if(x.getVal().equals(v)){
-                    System.out.println("Estado actual: " + x.getNo() + " estado analisis: "+actualState+ " Es F: "+x.isFinal());
-                    isF = x.isFinal(); 
-                    break;
-                }
-               
+                //if(x.getVal().equals(v)){
+                System.out.println("Estado actual: " + x.getNo() + " estado analisis: "+actualState+ " Es F: "+x.isFinal());
+                isF = x.isFinal(); 
+                break;
+                //}
             }
         }
         
@@ -116,10 +115,10 @@ public class TransitionTable {
                 Node newTransition = new Node(actual.getNo(), tbl.getNode(hoja-1).getVal());
                 newTransition.getNextPos().addAll(actual.getNextPos());
                 
-                if(tbl.getNode(hoja-1).getVal() != "#"){
+                //if(tbl.getNode(hoja-1).getVal() != "#"){
                     newTransition.getNextPosFinal().addAll(tbl.getNode(hoja-1).getNextPos());
                     newTransition.setNoFinal(searchState(states, tbl.getNode(hoja-1).getNextPos()));
-                }
+                //}
 
                 //para determinar si es un estado de aceptación
                 auxi2 = newTransition.getNextPos();
@@ -247,20 +246,32 @@ public class TransitionTable {
         
         String relas ="";
         
-        
+        char simpleQuo = 39, doubleQuo = 34, bar = 92, salto = 110;
+        String name = "";
         for(Node x : this.transitions){
             if(x.isFinal()){
                 text += " S"+x.getNo();
             }
+            if(x.getVal().charAt(0) == '\\' && x.getVal().charAt(1) == salto){ // si el posible valor es un salto de linea
+                name = "\"\\\\n\"";
+            }
+            else if(x.getVal().charAt(0) == '\\' && x.getVal().charAt(1) == doubleQuo){ // si el posible valor es comilla doble
+                name = "\"\\\\''\"";
+            }else if(x.getVal().charAt(0) == '\\' && x.getVal().charAt(1) == simpleQuo){ // si el posible valor es comilla simple
+                name = "\"\\\\'\"";
+            }else{
+                name = x.getVal();
+            }
+            
             if(x.getVal() != "#"){
-                relas += "    S"+ x.getNo()+ " -> S"+ x.getFinalNo() + "[label ="+x.getVal()+"];\n";
+                relas += "    S"+ x.getNo()+ " -> S"+ x.getFinalNo() + "[label ="+name+"];\n";
             }
             
         }
         text += ";\n";
         
         text += "   node [shape=circle style=invis]; S-1\n";
-        relas += "S-1 -> S0\n";
+        relas += "  S-1 -> S0\n";
         
 	text += "   node [shape = circle, color=\"#0000ff80\", style = \"filled\", fontcolor = \"white\"];\n";
         text += relas;

@@ -681,6 +681,7 @@ class CUP$Syntactical$actions {
 		String i1 = (String)((java_cup.runtime.Symbol) CUP$Syntactical$stack.peek()).value;
 		
                 parser.notacion += i1;
+                parser.notacion += ",";
             
               CUP$Syntactical$result = parser.getSymbolFactory().newSymbol("LISTVAL",7, ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()), ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()), RESULT);
             }
@@ -713,6 +714,7 @@ class CUP$Syntactical$actions {
 		String i1 = (String)((java_cup.runtime.Symbol) CUP$Syntactical$stack.peek()).value;
 		
                 parser.notacion += i1;
+                parser.notacion += ",";
             
               CUP$Syntactical$result = parser.getSymbolFactory().newSymbol("ASCIIS",9, ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()), ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()), RESULT);
             }
