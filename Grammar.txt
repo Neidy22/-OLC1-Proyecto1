@@ -1,60 +1,40 @@
-comment = //(letra|digito|caracter)
-multiComment = <! (letra|digito|caracter)* !>
+<INICIO> ::= "{" <PROGRAMBODY> "}"
+	   | comment <INICIO>
+           | multicomment <INICIO>
 
-DEFINICION DE CONJUNTOS
-conjunto = CONJ:id->notation;
-notation = initVal~endVal
+<PROGRAMBODY> ::= comment <PROGRAMBODY>
+		| multicomment <PROGRAMBODY>
+		| <DEFINITION> <PROGRAMBODY>
+		| <EVALUATION> <PROGRAMBODY>
+		| error <PROGRAMBODY>
+		| "}"
 
-DEFINICION DE EXPRESIONES REGULARES
-expr = id->prefixRegex
-prefixRegex = operator Element Element;
-operator = . | | |* | + |?
-Element = {conjunto} | stringsV | specialChar
+<DEFINITION> ::= <CONJUNTO>
+		| <EXPRG>
+		| separator separator
 
-DEFINICION DE CARACTERES ESPECIALES
-nextLine = \n
-singleQuoMark = \'
-doubleQuoMark = \"
+<CONJUNTO> ::= "CONJ" ":" id "-" ">" <NOTATION> ";"
 
-DEFINICION DE EVALUACIONES
-eval = id : " lexema " ;
+<NOTATION> ::= id "~" id
+	     | asciiChar "~" asciiChar
+	     | <LISTVAL>
+	     | <ASCIIS>
 
+<LISTVAL> ::= (id "," )+
+	     |id	
+<ASCIIS> ::= (asciiChar "," )+
+	     |asciiChar
 
-DEFINICION DE LA GRAMATICA
-INIT -> comment INIT
-	|multicomment INIT
-	|definition evaluation 
-	|evaluation 
-	|error	INIT
+<EXPRG> ::= id "-"">" <PREFIXREGEX> ";"
 
-definition -> conjunto definition
-	    | expr definition
-            | comment definition
-            | multicomment definition
-	    | separator separator
+<PREGIXREGEX> ::= "." <PREFIXREGEX> <PREFIXREGEX> 
+		| "|" <PREFIXREGEX> <PREFIXREGEX> 
+		| "*" <PREFIXREGEX> 
+		| "+" <PREFIXREGEX> 
+		| "?" <PREFIXREGEX> 
+		| "{" id "}"
+		| stringVal
+		| specialChar 
 
-evaluation -> eval evaluation
-	   | comment evaluation
-           | multicomment evaluation
-	   | eval
-	
-
-
-<YYINITIAL> ["//"]                 {
-                                    lexema = lexema + yytext();
-                                    yybegin(comment);
-                                 }
-
-            <comment> [^\r\n]*     { lexema = lexema + yytext();} 
-            <comment> \r\n   {
-                                    System.out.println("Reconocio token <comentario> lexema: "+ lexema);
-                                    String aux = lexema;
-                                    lexema = "";
-                                    yybegin(YYINITIAL);
-                                    return new Symbol(sym.comment, yycolumn, yyline, aux);
-                                    
-                                
-                                    
-                                    
-                                    }
-		
+<EVALUATION> ::= id ":" stringVal ";"
+		 
