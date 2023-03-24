@@ -210,7 +210,7 @@ public class Syntactical extends java_cup.runtime.lr_parser {
         System.out.println("\t\tFila: "+fila);
         System.out.println("\t\tColumna: "+columna);
         
-        TError tmp = new TError("Sintactico",lexema,"Caracter no esperado",fila,columna);
+        TError tmp = new TError(mainMenu.nameActualF, "Sintáctico",lexema,"Caracter no esperado",fila,columna);
         EXREGAN.errores.add(tmp);
     }
 
@@ -226,7 +226,7 @@ public class Syntactical extends java_cup.runtime.lr_parser {
         System.out.println("\t\tFila: "+fila);
         System.out.println("\t\tColumna: "+columna);
         
-        TError tmp = new TError("Sintactico",lexema,"Caracter no esperado",fila,columna);
+        TError tmp = new TError(mainMenu.nameActualF, "Sintáctico",lexema,"Caracter no esperado",fila,columna);
         EXREGAN.errores.add(tmp);
         
     }
@@ -477,8 +477,8 @@ class CUP$Syntactical$actions {
             
             parser.rootT = newR;
             parser.rootT.generateAST((String) n);
-            EXREGAN.trees.add((AST)r);
-            //EXREGAN.menu.addTree((String)n, EXREGAN.menu.getTrees());
+            EXREGAN.trees.add((AST)newR);
+            EXREGAN.menu.addTree((String)n, EXREGAN.menu.getTrees());
             System.out.println("Nueva expresión regular"); 
           
               CUP$Syntactical$result = parser.getSymbolFactory().newSymbol("EXPRG",5, ((java_cup.runtime.Symbol)CUP$Syntactical$stack.elementAt(CUP$Syntactical$top-3)), ((java_cup.runtime.Symbol)CUP$Syntactical$stack.peek()), RESULT);

@@ -83,6 +83,7 @@ public class NextTable {
         }else{
             //the folder already exists
            System.out.println("Carpeta de siguientes ya existe");
+           EXREGAN.menu.addTree(this.name, EXREGAN.menu.getNexts());
         }
         
         

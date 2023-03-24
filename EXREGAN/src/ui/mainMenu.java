@@ -6,12 +6,14 @@ package ui;
 
 import Analyzers.Analyzer;
 import Main.EXREGAN;
+import Objects.AST;
 import Objects.Conjunto;
 import Objects.Evaluation;
 import Objects.Node;
 import Objects.TError;
 import Objects.TransitionTable;
 import java.awt.Desktop;
+import java.awt.Image;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -23,7 +25,9 @@ import java.io.StringReader;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
@@ -45,7 +49,8 @@ public class mainMenu extends javax.swing.JFrame {
     FileOutputStream outF;
     String nameF;
     public static String nameActualF;
-    int contador;
+    int contador, viewIndex;
+    char typeG = 'a';
     
     private DefaultTreeModel reports;
     private DefaultMutableTreeNode root, trees, afd, afnd, nexts, transitions, errors, outs;
@@ -97,7 +102,7 @@ public class mainMenu extends javax.swing.JFrame {
         btnAnalyze = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jlblGraph = new javax.swing.JLabel();
+        viewGraph = new javax.swing.JLabel();
         btnNext = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
         scrollTree = new javax.swing.JScrollPane();
@@ -184,7 +189,7 @@ public class mainMenu extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(126, 96, 246));
 
-        jScrollPane4.setViewportView(jlblGraph);
+        jScrollPane4.setViewportView(viewGraph);
 
         btnNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ui/images/right.png"))); // NOI18N
         btnNext.setText("jButton3");
@@ -196,6 +201,11 @@ public class mainMenu extends javax.swing.JFrame {
 
         btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ui/images/left.png"))); // NOI18N
         btnBack.setText("jButton4");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -310,12 +320,27 @@ public class mainMenu extends javax.swing.JFrame {
         jmView.setText("View");
 
         jMenuItem5.setText("Trees");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         jmView.add(jMenuItem5);
 
         jMenuItem6.setText("Following table");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         jmView.add(jMenuItem6);
 
         jMenuItem7.setText("Transition table");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
         jmView.add(jMenuItem7);
 
         jMenu5.setText("Automats");
@@ -381,7 +406,10 @@ public class mainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMNewFActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
-        // TODO add your handling code here:
+        viewIndex = 0;
+        typeG = 'd';
+        String path = "src\\Reports\\AFD_201801671\\"+EXREGAN.afds.get(viewIndex).getName();
+        insertImage(this.viewGraph, path, 685, 390);
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
@@ -390,6 +418,8 @@ public class mainMenu extends javax.swing.JFrame {
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
         // TODO add your handling code here:
+        viewIndex++;
+        this.setImages(typeG, viewIndex);
     }//GEN-LAST:event_btnNextActionPerformed
 
     private void btnAnalyzeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnalyzeActionPerformed
@@ -441,22 +471,73 @@ public class mainMenu extends javax.swing.JFrame {
 
     private void jMenuErrorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuErrorActionPerformed
         // TODO add your handling code here:
-        //rellenar tabla de errores
-        String tableHtml = generateTable();
-        File tableErrors = new File("src\\files\\ERRORES_"+this.contador+".html");
-        createFile(tableErrors,tableHtml);
-        try { 
-            openDisplay(tableErrors.toString());
-        } catch (IOException ex) {
-            Logger.getLogger(mainMenu.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        generateErrors();
+        
     }//GEN-LAST:event_jMenuErrorActionPerformed
 
     private void reportsTAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_reportsTAncestorAdded
       
     }//GEN-LAST:event_reportsTAncestorAdded
 
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        // TODO add your handling code here:
+        viewIndex = 0;
+        typeG = 'a';
+        String path = "src\\Reports\\ARBOLES_201801671\\"+EXREGAN.trees.get(viewIndex).getName()+".png";
+        insertImage(this.viewGraph, path, 685, 390);
+        
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        // TODO add your handling code here:
+        viewIndex = 0;
+        typeG = 'b';
+        String path = "src\\Reports\\SIGUIENTES_201801671\\"+EXREGAN.nextPos.get(viewIndex).getName()+".png";
+        insertImage(this.viewGraph, path, 685, 390);
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        // TODO add your handling code here:
+        viewIndex = 0;
+        typeG = 'c';
+        String path = "src\\Reports\\TRANSICIONES_201801671\\"+EXREGAN.afds.get(viewIndex).getName()+".png";
+        insertImage(this.viewGraph, path, 685, 390);
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        // TODO add your handling code here:
+        viewIndex--;
+        this.setImages(typeG, viewIndex);
+    }//GEN-LAST:event_btnBackActionPerformed
+
    
+    public void setImages(char c, int i){
+        if(c == 'a'){
+            if(i >= 0 && i < EXREGAN.trees.size()-1){
+                String path = "src\\Reports\\ARBOLES_201801671\\"+EXREGAN.trees.get(viewIndex).getName()+".png";
+                insertImage(this.viewGraph, path, 685, 390);
+            }
+        }else if(c == 'b'){
+            if(i >= 0 && i < EXREGAN.nextPos.size()-1){
+                String path = "src\\Reports\\SIGUIENTES_201801671\\"+EXREGAN.nextPos.get(viewIndex).getName()+".png";
+                insertImage(this.viewGraph, path, 685, 390);
+            }
+        }else if(c == 'c'){
+            if(i >= 0 && i < EXREGAN.afds.size()-1){
+                String path = "src\\Reports\\TRANSICIONES_201801671\\"+EXREGAN.afds.get(viewIndex).getName()+".png";
+                insertImage(this.viewGraph, path, 685, 390);
+            }
+        }else if(c == 'd'){
+            if(i >= 0 && i < EXREGAN.afds.size()-1){
+                String path = "src\\Reports\\AFD_201801671\\"+EXREGAN.afds.get(viewIndex).getName()+".png";
+                insertImage(this.viewGraph, path, 685, 390);
+            }
+        }
+        
+    
+    }
+    
+    
     
     public void setArea(File f){
         String text = "";
@@ -528,9 +609,35 @@ public class mainMenu extends javax.swing.JFrame {
         
         String header ="<html>\n";
         header += "<style>\n";
-        header += "table,th,td{\n"
-                + "border:1px solid black;\n"
+        header += "body{\n"
+               + "background-color: rgba(0,0,0);\n"
+               + "}\n";
+        header += "h1{\n"
+               + "text-align: center;\n"
+               + "color: hsl(290,60%,70%);"
+               + "}\n";    
+        header += "table{\n"
+                + "margin-left: auto;\n"
+                + "margin-right: auto;\n"
+                + "border-style:solid; ;\n"
+                + "border-color:rgba(214,0,255);\n"
+                + "background-color: rgba(53, 19, 92);\n"
+                + "color: white;\n"
+                + "}\n";
+        header += ".col{\n" +
+                    " border-color: rgba(125,18,255);\n" +
+                    " background-color: rgba(166, 177, 255, 0.3);\n" +
+                    "}\n";
+        header += "tr, th{\n"
+                + " border-style:solid;\n"
+                + "border-color: rgba(171,32,253);\n"
+                + "background-color: rgba(32,5,137);\n"
                 + "}\n"
+                
+                + "th, tr:hover {\n"
+                + "background-color: #DF00FE;\n"
+                + "}\n"
+                
                 + "</style>\n";
         
         header += "<h1>TABLA DE ERRORES</h1>\n";
@@ -538,17 +645,19 @@ public class mainMenu extends javax.swing.JFrame {
         String body ="<body>\n"
                     + "<table> \n";
         body += "    <tr>\n";
-        body += "        <th>No. </th>\n";
-        body += "        <th>Línea</th>\n";
-        body += "        <th>Columna</th>\n";
-        body += "        <th>Tipo</th>\n";
-        body += "        <th>Lexema</th>\n";
-        body += "        <th>Descripción</th>\n";
+        body += "        <th class = \"col\">Archivo. </th>\n";
+        body += "        <th class = \"col\">No. </th>\n";
+        body += "        <th class = \"col\">Línea</th>\n";
+        body += "        <th class = \"col\">Columna</th>\n";
+        body += "        <th class = \"col\">Tipo</th>\n";
+        body += "        <th class = \"col\">Lexema</th>\n";
+        body += "        <th class = \"col\">Descripción</th>\n";
         body += "    </tr>\n";
         
         int cont = 1;
         for(TError x: EXREGAN.errores ){
             body += "    <tr>\n";
+            body += "        <th>"+x.getArchi()+"</th>\n";
             body += "        <th>"+cont+"</th>\n";
             body += "        <th>"+x.getRow()+"</th>\n";
             body += "        <th>"+x.getColumn()+"</th>\n";
@@ -648,7 +757,7 @@ public class mainMenu extends javax.swing.JFrame {
     public void addFolder(DefaultMutableTreeNode parent){
         //insert the folder in the tree reports
         try{
-            reports.insertNodeInto(parent, root, root.getChildCount());
+            reports.insertNodeInto(parent, root, parent.getChildCount());
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -668,6 +777,20 @@ public class mainMenu extends javax.swing.JFrame {
     public DefaultMutableTreeNode getTrees(){
        return this.trees;         
     }
+    
+    public DefaultMutableTreeNode getNexts(){
+       return this.nexts;         
+    }
+    
+    public DefaultMutableTreeNode getTransitions(){
+       return this.transitions;         
+    }
+    
+    public DefaultMutableTreeNode getAFD(){
+       return this.afd;         
+    }
+    
+    
 
     public void analyzeInput(){
         
@@ -872,7 +995,7 @@ public class mainMenu extends javax.swing.JFrame {
                 if(trees.mkdir()){ // create the folder
                  
                     System.out.println("Carpeta de SALIDAS creada");
-                    //EXREGAN.menu.addFolder(EXREGAN.menu.getTrees());
+                    EXREGAN.menu.addFolder(this.outs);
                     
                 }
             }catch(Exception e){
@@ -881,6 +1004,7 @@ public class mainMenu extends javax.swing.JFrame {
         }else{
             //the folder already exists
            System.out.println("Carpeta de SALIDAS ya existe");
+           EXREGAN.menu.addTree(name,this.outs);
         }
         
         
@@ -893,7 +1017,47 @@ public class mainMenu extends javax.swing.JFrame {
     }
     
     
- 
+    public void generateErrors(){
+        File trees = new File("src\\Reports\\ERRORES_201801671");
+        if(!trees.exists()){ // if folder doesn't exists
+            try{
+                if(trees.mkdir()){ // create the folder
+                 
+                    System.out.println("Carpeta de ERRORES creada");
+                    EXREGAN.menu.addFolder(this.errors);
+                    
+                }
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }else{
+            //the folder already exists
+           System.out.println("Carpeta de ERRORES ya existe");
+           EXREGAN.menu.addTree("Errores", this.errors);
+        }
+        
+        
+        
+        //rellenar tabla de errores
+        String tableHtml = generateTable();
+        File tableErrors = new File("src\\Reports\\ERRORES_201801671\\ERRORES.html");
+        createFile(tableErrors,tableHtml);
+        try { 
+            openDisplay(tableErrors.toString());
+        } catch (IOException ex) {
+            Logger.getLogger(mainMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+    }
+    
+    public void insertImage(JLabel component, String dir, int w, int h){
+        ImageIcon img= new ImageIcon(dir);
+        Image resize=img.getImage();
+        Image tam=resize.getScaledInstance(w, h, Image.SCALE_SMOOTH);
+        ImageIcon fin= new ImageIcon(tam);
+        component.setIcon(fin);
+  
+    }
     
     /**
      * @param args the command line arguments
@@ -956,7 +1120,6 @@ public class mainMenu extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JLabel jlblGraph;
     private javax.swing.JMenu jmFile;
     private javax.swing.JMenu jmView;
     private javax.swing.JTabbedPane jtpGraph;
@@ -964,5 +1127,6 @@ public class mainMenu extends javax.swing.JFrame {
     private javax.swing.JScrollPane scrollTree;
     private javax.swing.JTextField txtConsole;
     private javax.swing.JTextArea txtFile;
+    private javax.swing.JLabel viewGraph;
     // End of variables declaration//GEN-END:variables
 }

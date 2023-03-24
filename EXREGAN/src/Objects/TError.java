@@ -9,6 +9,7 @@ package Objects;
  * @author neidy
  */
 public class TError {
+    private String archivo;
     private String tipo;
     private String lexema;
     private String description;
@@ -16,7 +17,8 @@ public class TError {
     private int col;
    
     
-    public TError(String t,String l, String d, int r, int c){
+    public TError(String archi,String t,String l, String d, int r, int c){
+        this.archivo = archi;
         this.tipo = t;
         this.lexema = l;
         this.description = d;
@@ -44,4 +46,7 @@ public class TError {
         return this.description;
     }
     
+    public String getArchi(){
+        return this.archivo;
+    }
 }

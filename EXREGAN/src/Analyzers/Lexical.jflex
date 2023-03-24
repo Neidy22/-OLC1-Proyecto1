@@ -2,10 +2,12 @@ package Analyzers;
 import java_cup.runtime.*;
 import Main.*;
 import Objects.*;
+import ui.*;
 %%
 
 %{
     String lexema="";
+ 
 %}
 
 
@@ -189,7 +191,7 @@ separator = [\u0025][\u0025]
 
 .   {
         System.out.println("Error léxico:  "+ yytext()+" Linea: "+ yyline +" Columna: "+yycolumn);
-        TError tmp = new TError("Léxico",yytext(),"Caracter no pertenece al lenguaje",yyline,yycolumn);
+        TError tmp = new TError(mainMenu.nameActualF, "Léxico",yytext(),"Caracter no pertenece al lenguaje",yyline,yycolumn);
         EXREGAN.errores.add(tmp);
         lexema = "";
         yybegin(YYINITIAL);

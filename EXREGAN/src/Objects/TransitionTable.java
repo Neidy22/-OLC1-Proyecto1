@@ -204,7 +204,7 @@ public class TransitionTable {
                 if(trees.mkdir()){ // create the folder
                  
                     System.out.println("Carpeta de transiciones creada");
-                    //EXREGAN.menu.addFolder(EXREGAN.menu.getTrees());
+                    EXREGAN.menu.addFolder(EXREGAN.menu.getTransitions());
                     
                 }
             }catch(Exception e){
@@ -213,6 +213,7 @@ public class TransitionTable {
         }else{
             //the folder already exists
            System.out.println("Carpeta de transiciones ya existe");
+           EXREGAN.menu.addTree(this.name, EXREGAN.menu.getTransitions());
         }
         
         
@@ -288,7 +289,7 @@ public class TransitionTable {
                 if(trees.mkdir()){ // create the folder
                  
                     System.out.println("Carpeta de AFD creada");
-                    //EXREGAN.menu.addFolder(EXREGAN.menu.getTrees());
+                    EXREGAN.menu.addFolder(EXREGAN.menu.getAFD());
                     
                 }
             }catch(Exception e){
@@ -297,6 +298,7 @@ public class TransitionTable {
         }else{
             //the folder already exists
            System.out.println("Carpeta de AFD ya existe");
+           EXREGAN.menu.addTree(this.name, EXREGAN.menu.getAFD());
         }
         
         
